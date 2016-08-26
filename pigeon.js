@@ -1,10 +1,34 @@
+var pport = 9999;
+
 var app = require('express')();
 var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 app.get('/', function(req, res){
-  res.send('<h1>Hello world</h1>');
+  res.sendFile(__dirname + '/view/index.html');
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
 });
+
+io.on('connection', function(socket){
+  socket.on('connection info', function(msg) {
+      io.emit('connection info', 'someone' + 'has connected.');
+  });
+    
+});
+
+io.on('connection', function(socket){
+        console.log('[USR-MGT] a user connected');
+    socket.on('disconnect', function(){
+        console.log('[USR-MGT] user disconnected');
+  });
+});
+
+http.listen(pport, function(){
+  console.log('listening on *:' + pport);
+});
+
