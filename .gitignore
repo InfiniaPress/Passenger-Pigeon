@@ -1,0 +1,5 @@
+# .gitignore for Infinia
+# (C) xiurobert 2016
+
+# Ignore installed packages
+node_modules/
