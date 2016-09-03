@@ -28,7 +28,7 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(pport, function(){
+http.listen(process.env.PORT || pport, function(){
   console.log('listening on *:' + pport);
 });
 
