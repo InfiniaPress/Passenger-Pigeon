@@ -4,7 +4,8 @@
   "description": "InfiniaPress Passenger Pigeon service for live chat",
   "main": "pigeon.js",
   "scripts": {
-    "test": "infinia-test-suite pp test"
+    "test": "./infinia-test-suite.sh pp test"
+    "start": "node pigeon.js"
   },
   "repository": {
     "type": "git",
