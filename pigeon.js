@@ -16,7 +16,7 @@ io.on('connection', function(socket){
 
 io.on('connection', function(socket){
   socket.on('connection info', function(usr) {
-      io.emit('connection info', usr + 'has connected.');
+      io.emit('connection info', usr + ' has connected.');
   });
 });
 
