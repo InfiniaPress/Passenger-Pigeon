@@ -27,6 +27,10 @@ io.on('connection', function(socket){
   });
 });
 
+io.on('disconnection', function(user){
+  io.emit('disconnection', user);
+})
+
 http.listen(process.env.PORT || pport, function(){
   console.log('listening on *:' + pport);
 });

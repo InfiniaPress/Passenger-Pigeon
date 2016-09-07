@@ -44,6 +44,14 @@
               $('#m').val('');
               return false;
           });
+        
+          $(window).on("beforeunload", function() { 
+              socket.emit('disconnection', username); 
+          })
+          
+          socket.on('disconnection', function(usr){
+              $('#messages').append($('<li>').text(usr + " has disconnected."));
+          })
           
           socket.on('chat message', function(msg, userName){
               $('#messages').append($('<li>').text(userName + " says: " + msg));
