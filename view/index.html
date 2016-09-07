@@ -31,6 +31,9 @@
           var socket = io();
           var username = prompt("What's your name?");
         
+          socket.on('connection info', function(msg){
+              $('#messages').append($('<li>').text(msg));
+          });
         
           $('form').submit(function(){
               socket.emit('chat message', $('#m').val(), username);
@@ -41,6 +44,7 @@
           socket.on('chat message', function(msg, userName){
               $('#messages').append($('<li>').text(userName + " says: " + msg));
           });
+          
       </script>
   </body>
 </html>
