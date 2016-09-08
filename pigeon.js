@@ -12,12 +12,13 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg, userName){
     io.emit('chat message', msg, userName);
   });
+  socket.on('connection info', function(usr){
+    io.emit('user add', {username: usr});
+  });
 });
 
 io.on('connection', function(socket){
-  socket.on('connection info', function(usr) {
-      io.emit('connection info', usr + ' has connected.');
-  });
+    socket.broadcast.emit('user joined');
 });
 
 io.on('connection', function(socket){

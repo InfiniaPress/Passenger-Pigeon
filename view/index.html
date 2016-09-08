@@ -35,9 +35,14 @@
               socket.emit('connection info', username);
           }
         
-          socket.on('connection info', function(msg){
-              $('#messages').append($('<li>').text(msg));
+          function send(message) {
+              $('#messages').append($('<li>').text(message));
+          }
+        
+          socket.on('user add', function(usr){
+              send(usr.username + " has joined.");
           });
+          
         
           $('form').submit(function(){
               socket.emit('chat message', $('#m').val(), username);
@@ -50,11 +55,11 @@
           })
           
           socket.on('disconnection', function(usr){
-              $('#messages').append($('<li>').text(usr + " has disconnected."));
+              send(usr + " has disconnected.");
           })
           
           socket.on('chat message', function(msg, userName){
-              $('#messages').append($('<li>').text(userName + ": " + msg));
+              send(userName + ": " + msg);
           });
           
       </script>
