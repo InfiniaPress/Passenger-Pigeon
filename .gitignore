@@ -3,3 +3,7 @@
 
 # Ignore installed packages
 node_modules/
+
+# Ignore IntelliJ (sry)
+.idea/
+*.iml/

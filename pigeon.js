@@ -1,13 +1,15 @@
-var pport = 9999;
-
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-//require('./config.js');
+var config = require("./config.json");
+
+
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/view/index.html');
 });
+
+app.use(express.static(path.join('/', 'assets')));
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
@@ -20,16 +22,16 @@ io.on('connection', function(socket){
 });
 
 io.on('connection', function(socket){
-        console.log('[USR-MGT] a user connected');
+        console.log('Passenger Pigeon > A user connected');
     socket.on('disconnect', function(){
         socket.broadcast.emit('user left', {
             username: socket.username,
         });
-        console.log('[USR-MGT] user disconnected');
+        console.log('Passenger Pigeon > A user disconnected');
   });
 });
 
-http.listen(process.env.PORT || pport, function(){
-  console.log('listening on *:' + pport);
+http.listen(process.env.PORT || config.port, function(){
+  console.log('Passenger Pigeon > Now listening on *:' + config.port);
 });
 
