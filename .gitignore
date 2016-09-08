@@ -6,4 +6,4 @@ node_modules/
 
 # Ignore IntelliJ (sry)
 .idea/
-*.iml/
+*.iml
