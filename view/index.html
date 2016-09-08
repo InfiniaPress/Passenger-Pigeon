@@ -24,7 +24,6 @@
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
       
-      
     <script src="/socket.io/socket.io.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script>
@@ -45,21 +44,17 @@
           
         
           $('form').submit(function(){
-              socket.emit('chat message', $('#m').val(), username);
+              socket.emit('chat message', $('#m').val());
               $('#m').val('');
               return false;
           });
-        
-          $(window).on("beforeunload", function() { 
-              socket.emit('disconnection', username); 
+          
+          socket.on('user left', function(usr){
+              send(usr.username + " has disconnected.");
           })
           
-          socket.on('disconnection', function(usr){
-              send(usr + " has disconnected.");
-          })
-          
-          socket.on('chat message', function(msg, userName){
-              send(userName + ": " + msg);
+          socket.on('chat message', function(msg, usr){
+              send(usr.username + ": " + msg);
           });
           
       </script>
