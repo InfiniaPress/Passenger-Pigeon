@@ -1,7 +1,9 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var config = require("./config.json");
+var path = require("path");
 
 
 
@@ -9,7 +11,7 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/view/index.html');
 });
 
-app.use(express.static(path.join('/', 'assets')));
+app.use(express.static(path.join(__dirname, '/assets')));
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
@@ -34,4 +36,3 @@ io.on('connection', function(socket){
 http.listen(process.env.PORT || config.port, function(){
   console.log('Passenger Pigeon > Now listening on *:' + config.port);
 });
-
