@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>InfiniaPress Passenger Pigeon (dev ver 0.0.1)</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,11 +31,12 @@
     </form>
       
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.rawgit.com/Nickersoft/push.js/master/push.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script>
           var socket = io();
           var username = prompt("What's your name?");
-          var notification = new Audio('./assets/notification.mp3');
+          var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
         
           if(username){
               socket.emit('connection info', username);
@@ -57,14 +62,15 @@
           })
           
           socket.on('chat message', function(msg, usr){
-              Push.create("Passenger Pigeon", {
+              Push.create('Passenger Pigeon', {
                 body: usr.username + ": " + msg,
-                icon: './assets/pigeon-final.png',
+                icon: "https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/pigeon-final.png",
                 timeout: 4000,
                 onClick: function () {
-                  window.focus();
-                  this.close();
-                }
+                    window.focus();
+                    this.close();
+                },
+                vibrate: [200, 100, 200, 100, 200, 100, 200]
               });
               notification.play();
               send(usr.username + ": " + msg);
