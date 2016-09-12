@@ -8,9 +8,6 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var config = require('./config.json');
 
-app.use('/view', express.static(__dirname + '/assets'));
-
-
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/view/index.html');
 });
@@ -26,12 +23,12 @@ io.on('connection', function(socket){
 });
 
 io.on('connection', function(socket){
-        console.log('[USR-MGT] a user connected');
+        console.log('Passenger Pigeon >> a user connected');
     socket.on('disconnect', function(){
         socket.broadcast.emit('user left', {
             username: socket.username,
         });
-        console.log('[USR-MGT] user disconnected');
+        console.log('Passenger Pigeon >> user disconnected');
   });
 });
 
