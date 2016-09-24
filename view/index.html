@@ -16,8 +16,8 @@
       form input { border-radius: 15px; outline: none;}
       form button { width: 9%; background: #00ff00; border: none; padding: 10px; color: white;}
       #messages { list-style-type: none; margin: 0; padding: 0; background: black;}
-      #messages li { padding: 5px 10px; background: #313131; color: #00ff00}
-      #messages li:nth-child(odd) { background: black; color: #00ff00}
+      #messages li { padding: 5px 10px; background: #313131;}
+      #messages li:nth-child(odd) { background: black;}
     </style>
       
       
@@ -37,17 +37,24 @@
           var socket = io();
           var username = prompt("What's your name?");
           var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
+          var usercolor;
+          var letters = '0123456789ABCDEF';
+          var color = '#';
+          for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          usercolor = color;
         
           if(username){
-              socket.emit('connection info', username);
+              socket.emit('connection info', username, usercolor);
           }
         
-          function send(message) {
-              $('#messages').append($('<li>').text(message));
+          function send(message, color) {
+              $('#messages').append('<li' + ' style="color:' + color + '">' + message + '</li>');
           }
         
           socket.on('user add', function(usr){
-              send(usr.username + " has joined.");
+              send(usr.username + " has joined.", usr.color);
           });
           
         
@@ -58,7 +65,7 @@
           });
           
           socket.on('user left', function(usr){
-              send(usr.username + " has disconnected.");
+              send(usr.username + " has disconnected.", usr.color);
           })
           
           socket.on('chat message', function(msg, usr){
@@ -75,7 +82,7 @@
                   });
               }
               notification.play();
-              send(usr.username + ": " + msg);
+              send(usr.username + ": " + msg, usr.color);
           });
           
       </script>

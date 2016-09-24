@@ -15,11 +15,12 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg, {username: socket.username});
+    io.emit('chat message', msg, {username: socket.username, color: socket.color});
   });
-  socket.on('connection info', function(usr){
+  socket.on('connection info', function(usr, color){
     socket.username = usr;
-    io.emit('user add', {username: usr});
+    socket.color = color;
+    io.emit('user add', {username: usr, color: color});
   });
 });
 
@@ -28,6 +29,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
         socket.broadcast.emit('user left', {
             username: socket.username,
+            color: socket.color,
         });
         console.log('Passenger Pigeon >> user disconnected');
   });
