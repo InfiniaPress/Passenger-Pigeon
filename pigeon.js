@@ -2,6 +2,7 @@ var express = require('express'); // Get the module
 var app = express(); // Create express by calling the prototype in var express
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var fs = require('fs');
 // Import events module
 var events = require('events');
 // Create an eventEmitter object

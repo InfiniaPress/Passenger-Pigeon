@@ -62,16 +62,18 @@
           })
           
           socket.on('chat message', function(msg, usr){
-              Push.create('Passenger Pigeon', {
-                body: usr.username + ": " + msg,
-                icon: "https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/pigeon-final.png",
-                timeout: 4000,
-                onClick: function () {
-                    window.focus();
-                    this.close();
-                },
-                vibrate: [200, 100, 200, 100, 200, 100, 200]
-              });
+              if(usr.username !== username){
+                Push.create('Passenger Pigeon', {
+                  body: usr.username + ": " + msg,
+                  icon: "https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/pigeon-final.png",
+                  timeout: 4000,
+                  onClick: function () {
+                      window.focus();
+                      this.close();
+                  },
+                  vibrate: [200, 100, 200, 100, 200, 100, 200]
+                  });
+              }
               notification.play();
               send(usr.username + ": " + msg);
           });
