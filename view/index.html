@@ -68,6 +68,12 @@
               send(usr.username + " has disconnected.", usr.color);
           })
           
+          socket.on("image", function(info) {
+              if (info.image) {
+                $('#messages').append('<li><img src="data:image/png;base64,' + info.buffer + '"><li>');
+              }
+          });
+          
           socket.on('chat message', function(msg, usr){
               if(usr.username !== username){
                 Push.create('Passenger Pigeon', {
