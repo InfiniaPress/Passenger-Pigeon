@@ -17,6 +17,12 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     io.emit('chat message', msg, {username: socket.username, color: socket.color});
   });
+  socket.on('typing', function(){
+    io.emit('typing', {username: socket.username, color: socket.color});
+  });
+  socket.on('not typing', function(){
+    io.emit('not typing', {username: socket.username, color: socket.color});
+  });
   socket.on('connection info', function(usr, color){
     socket.username = usr;
     socket.color = color;

@@ -15,7 +15,7 @@
       form input { border: 1px solid #00ff00; padding: 10px; width: 90%; margin-right: .5%; background: black; color: #00ff00; font-family: "courier";}
       form input { border-radius: 15px; outline: none;}
       form button { width: 9%; background: #00ff00; border: none; padding: 10px; color: white;}
-      #messages { list-style-type: none; margin: 0; padding: 0; background: black;}
+      #messages { list-style-type: none; margin: 0; padding: 0; background: black; margin-bottom: 15px;}
       #messages li { padding: 5px 10px; background: #313131;}
       #messages li:nth-child(odd) { background: black;}
     </style>
@@ -39,7 +39,12 @@
           var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
           var usercolor;
           var colours = ["#003EFF", "#00CED1", "#00FFCC", "#0276FD", "#05EDFF", "#0EBFE9", "#1DA237", "#0AC92B", "#24D330", "#2FAA96", "#488214", "#49E9BD", "#5B59BA", "#62B1F6", "#72587F", "#76EE00", "#7F00FF", "#7FFFD4", "#82CFFD", "#820BBB", "#CD0000", "#CDCD00"];
+          var typing = false;
           usercolor = colours[Math.floor(Math.random()*colours.length)];
+        
+          function autoscroll(){
+              window.scrollTo(0,document.body.scrollHeight);
+          }
         
           if(username){
               socket.emit('connection info', username, usercolor);
@@ -59,6 +64,32 @@
               $('#m').val('');
               return false;
           });
+        
+          function timeoutFunction(){
+              typing = false;
+              socket.emit("not typing");
+          }
+          
+          $("form input").on("keydown", function(e){
+              if(e.which !== 13){
+                 if(typing == false) {
+                    typing = true
+                    socket.emit("typing");
+                    timeout = setTimeout(timeoutFunction, 5000);
+                 } else {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(timeoutFunction, 5000);
+                 }
+              }
+          });
+        
+          socket.on('typing', function(usr){
+              send(usr.username + " is typing.", usr.color);
+          })
+          
+          socket.on('not typing', function(usr){
+              send(usr.username + " is not typing.", usr.color);
+          })
           
           socket.on('user left', function(usr){
               send(usr.username + " has disconnected.", usr.color);
@@ -85,6 +116,7 @@
               }
               notification.play();
               send(usr.username + ": " + msg, usr.color);
+              autoscroll();
           });
           
       </script>
