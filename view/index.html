@@ -15,7 +15,7 @@
       form input { border: 1px solid #00ff00; padding: 10px; width: 90%; margin-right: .5%; background: black; color: #00ff00; font-family: "courier";}
       form input { border-radius: 15px; outline: none;}
       form button { width: 9%; background: #00ff00; border: none; padding: 10px; color: white;}
-      #messages { list-style-type: none; margin: 0; padding: 0; background: black; margin-bottom: 15px;}
+      #messages { list-style-type: none; margin: 0; padding: 0; background: black;}
       #messages li { padding: 5px 10px; background: #313131;}
       #messages li:nth-child(odd) { background: black;}
     </style>
@@ -52,6 +52,10 @@
         
           function send(message, color) {
               $('#messages').append('<li' + ' style="color:' + color + '">' + message + '</li>');
+              if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 45) {
+                 $("form").css("position", "static");
+                 autoscroll();
+              }
           }
         
           socket.on('user add', function(usr){
@@ -116,7 +120,6 @@
               }
               notification.play();
               send(usr.username + ": " + msg, usr.color);
-              autoscroll();
           });
           
       </script>
