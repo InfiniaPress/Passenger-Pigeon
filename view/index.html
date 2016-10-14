@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>InfiniaPress Passenger Pigeon (dev ver 0.0.1)</title>
+    <title>InfiniaPress Passenger Pigeon (dev ver 0.1.0)</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html {background: black;}
@@ -106,6 +106,13 @@
           });
           
           socket.on('chat message', function(msg, usr){
+              msg = msg.replace(":)", "🙂");
+              msg = msg.replace(":D", "😃");
+              msg = msg.replace(":'(", "😭");
+              msg = msg.replace(":-|", "😑");
+              msg = msg.replace(":-O", "😱");
+              msg = msg.replace(":P", "😛");
+              msg = msg.replace("X-(", "😡");
               if(usr.username !== username){
                 Push.create('Passenger Pigeon', {
                   body: usr.username + ": " + msg,
@@ -117,8 +124,8 @@
                   },
                   vibrate: [200, 100, 200, 100, 200, 100, 200]
                   });
+                notification.play();
               }
-              notification.play();
               send(usr.username + ": " + msg, usr.color);
           });
           
