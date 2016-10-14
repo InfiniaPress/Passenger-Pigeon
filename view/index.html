@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>InfiniaPress Passenger Pigeon (v1.0.1)</title>
+    <title>InfiniaPress Passenger Pigeon (v1.0.2)</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html {background: black;}
@@ -65,8 +65,10 @@
           
         
           $('form').submit(function(){
-              socket.emit('chat message', $('#m').val());
-              $('#m').val('');
+              if(/\S/.test($("#m").val())){
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+              }
               return false;
           });
         
