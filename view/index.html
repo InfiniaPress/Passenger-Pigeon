@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>InfiniaPress Passenger Pigeon (dev ver 0.1.0)</title>
+    <title>InfiniaPress Passenger Pigeon (v1.0.0)</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html {background: black;}
@@ -27,6 +27,7 @@
   <body>
     <ul id="messages"></ul>
     <form action="">
+      <i id="typing" style="text-align: center;"></i><br>
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
       
@@ -88,11 +89,12 @@
           });
         
           socket.on('typing', function(usr){
-              send(usr.username + " is typing.", usr.color);
+              $("#typing").text(usr.username + " is typing.");
+              $("#typing").css("color", usr.color);
           })
           
           socket.on('not typing', function(usr){
-              send(usr.username + " is not typing.", usr.color);
+              $("#typing").text("");
           })
           
           socket.on('user left', function(usr){
