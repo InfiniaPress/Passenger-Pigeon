@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>InfiniaPress Passenger Pigeon (v1.0.0)</title>
+    <title>InfiniaPress Passenger Pigeon (v1.0.1)</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html {background: black;}
@@ -80,10 +80,10 @@
                  if(typing == false) {
                     typing = true
                     socket.emit("typing");
-                    timeout = setTimeout(timeoutFunction, 5000);
+                    timeout = setTimeout(timeoutFunction, 2000);
                  } else {
                     clearTimeout(timeout);
-                    timeout = setTimeout(timeoutFunction, 5000);
+                    timeout = setTimeout(timeoutFunction, 2000);
                  }
               }
           });
