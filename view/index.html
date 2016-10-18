@@ -7,18 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
     <title>InfiniaPress Passenger Pigeon (v1.0.2)</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html {background: black;}
-      body { font: 13px Courier;}
-      form { background: black; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 1px solid #00ff00; padding: 10px; width: 90%; margin-right: .5%; background: black; color: #00ff00; font-family: "courier";}
-      form input { border-radius: 15px; outline: none;}
-      form button { width: 9%; background: #00ff00; border: none; padding: 10px; color: white;}
-      #messages { list-style-type: none; margin: 0; padding: 0; background: black;}
-      #messages li { padding: 5px 10px; background: #313131;}
-      #messages li:nth-child(odd) { background: black;}
-    </style>
+    <link rel="stylesheet" href="themes/theme_retro_default.css">
       
       
   </head>
@@ -142,10 +131,8 @@
           
           socket.on("image", function(info) {
               if (info.image) {
-
                 $('#messages').append('<li><img src=' + info.buffer + '"><li>');
-
-                $('#messages').append('<li><img src="data:image/png;base64,' + info.buffer + '"><li>');
+                alert(info.buffer);
               }
           });
           
