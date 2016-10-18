@@ -130,7 +130,6 @@
           socket.on('imageserver', function(info) {
               if (info.image) {
                 $('#messages').append('<li><img src=' + info.buffer + '><li>');
-                send("Image sent.", "#003EFF");
               }
           })
           
