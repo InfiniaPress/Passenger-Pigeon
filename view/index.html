@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>InfiniaPress Passenger Pigeon (v1.0.2)</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html {background: black;}
+      body { font: 13px Courier;}
+      form { background: black; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 1px solid #00ff00; padding: 10px; width: 90%; margin-right: .5%; background: black; color: #00ff00; font-family: "courier";}
+      form input { border-radius: 15px; outline: none;}
+      form button { width: 9%; background: #00ff00; border: none; padding: 10px; color: white;}
+      #messages { list-style-type: none; margin: 0; padding: 0; background: black;}
+      #messages li { padding: 5px 10px; background: #313131;}
+      #messages li:nth-child(odd) { background: black;}
+    </style>
+      
+      
+  </head>
+    
+    
+  <body>
+    <ul id="messages">
+    <img id="img">
+    </ul>
+    <form action="">
+      <i id="typing" style="text-align: center;"></i><br>
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <input id="file" type='file' onchange="readURL(this)"/>
+      
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.rawgit.com/Nickersoft/push.js/master/push.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script>
+          var socket = io();
+          var username = prompt("What's your name?");
+          var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
+          var usercolor;
+          var colours = ["#003EFF", "#00CED1", "#00FFCC", "#0276FD", "#05EDFF", "#0EBFE9", "#1DA237", "#0AC92B", "#24D330", "#2FAA96", "#488214", "#49E9BD", "#5B59BA", "#62B1F6", "#72587F", "#76EE00", "#7F00FF", "#7FFFD4", "#82CFFD", "#820BBB", "#CD0000", "#CDCD00"];
+          var typing = false;
+          usercolor = colours[Math.floor(Math.random()*colours.length)];
+        
+          function autoscroll(){
+              window.scrollTo(0,document.body.scrollHeight);
+          }
+        
+          $("#file").on("change", readURL());
+        
+          function readURL(el) {
+            if (el.files && el.files[0]) {
+                var FR= new FileReader();
+                FR.onload = function(e) {
+                  $("img").attr("src", e.target.result);
+                  socket.emit('image', e.target.result);
+                };       
+                FR.readAsDataURL( el.files[0] );
+            } 
+          };
+
+        
+          if(username){
+              socket.emit('connection info', username, usercolor);
+          }
+        
+          function send(message, color) {
+              $('#messages').append('<li' + ' style="color:' + color + '">' + message + '</li>');
+              if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 45) {
+                 $("form").css("position", "static");
+                 autoscroll();
+              }
+          }
+        
+          socket.on('user add', function(usr){
+              send(usr.username + " has joined.", usr.color);
+          });
+          
+        
+          $('form').submit(function(){
+              if(/\S/.test($("#m").val())){
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+              }
+              return false;
+          });
+        
+          function timeoutFunction(){
+              typing = false;
+              socket.emit("not typing");
+          }
+          
+          $("form input").on("keydown", function(e){
+              if(e.which !== 13){
+                 if(typing == false) {
+                    typing = true
+                    socket.emit("typing");
+                    timeout = setTimeout(timeoutFunction, 2000);
+                 } else {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(timeoutFunction, 2000);
+                 }
+              }
+          });
+        
+          socket.on('typing', function(usr){
+              $("#typing").text(usr.username + " is typing.");
+              $("#typing").css("color", usr.color);
+          })
+          
+          socket.on('not typing', function(usr){
+              $("#typing").text("");
+          })
+          
+          socket.on('user left', function(usr){
+              send(usr.username + " has disconnected.", usr.color);
+          })
+          
+          socket.on("image", function(info) {
+              if (info.image) {
+                $('#messages').append('<li><img src=' + info.buffer + '"><li>');
+              }
+          });
+          
+          socket.on('chat message', function(msg, usr){
+              msg = msg.replace(":)", "🙂");
+              msg = msg.replace(":D", "😃");
+              msg = msg.replace(":'(", "😭");
+              msg = msg.replace(":-|", "😑");
+              msg = msg.replace(":-O", "😱");
+              msg = msg.replace(":P", "😛");
+              msg = msg.replace("X-(", "😡");
+              if(usr.username !== username){
+                Push.create('Passenger Pigeon', {
+                  body: usr.username + ": " + msg,
+                  icon: "https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/pigeon-final.png",
+                  timeout: 4000,
+                  onClick: function () {
+                      window.focus();
+                      this.close();
+                  },
+                  vibrate: [200, 100, 200, 100, 200, 100, 200]
+                  });
+                notification.play();
+              }
+              send(usr.username + ": " + msg, usr.color);
+          });
+          
+      </script>
+  </body>
+</html>
