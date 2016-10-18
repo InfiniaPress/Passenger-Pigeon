@@ -9,47 +9,65 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var config = require('./config.json');
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/view/index.html');
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/view/index.html');
 });
 
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg, {username: socket.username, color: socket.color});
-  });
-  socket.on('typing', function(){
-    io.emit('typing', {username: socket.username, color: socket.color});
-  });
-  socket.on('not typing', function(){
-    io.emit('not typing', {username: socket.username, color: socket.color});
-  });
-  socket.on('connection info', function(usr, color){
-    socket.username = usr;
-    socket.color = color;
-    io.emit('user add', {username: usr, color: color});
-  });
+app.use(express.static(__dirname + '/assets'));
+
+
+io.on('connection', function(socket) {
+    socket.on('chat message', function(msg) {
+        io.emit('chat message', msg, {
+            username: socket.username,
+            color: socket.color
+        });
+    });
+    socket.on('typing', function() {
+        io.emit('typing', {
+            username: socket.username,
+            color: socket.color
+        });
+    });
+    socket.on('not typing', function() {
+        io.emit('not typing', {
+            username: socket.username,
+            color: socket.color
+        });
+    });
+    socket.on('connection info', function(usr, color) {
+        socket.username = usr;
+        socket.color = color;
+        io.emit('user add', {
+            username: usr,
+            color: color
+        });
+    });
 });
 
-io.on('connection', function(socket){
-       socket.on('image', function(url){
-           socket.emit('image', { image: true, buffer: url });
-       })
-          //fs.readFile(__dirname + '/assets/pigeon-final.png', function(err, buf){
-           // socket.emit('image', { image: true, buffer: buf.toString('base64') });
-           // if(!err){
-            //  console.log('image test success');
-           // }
+io.on('connection', function(socket) {
+    socket.on('image', function(url) {
+            socket.emit('image', {
+                image: true,
+                buffer: url
+            });
+        })
+        //fs.readFile(__dirname + '/assets/pigeon-final.png', function(err, buf){
+        // socket.emit('image', { image: true, buffer: buf.toString('base64') });
+        // if(!err){
+        //  console.log('image test success');
+        // }
         //  });
-        console.log('Passenger Pigeon >> a user connected');
-    socket.on('disconnect', function(){
+    console.log('Passenger Pigeon >> a user connected');
+    socket.on('disconnect', function() {
         socket.broadcast.emit('user left', {
             username: socket.username,
             color: socket.color,
         });
         console.log('Passenger Pigeon >> user disconnected');
-  });
+    });
 });
 
-http.listen(process.env.PORT || config.port, function(){
-  console.log('listening on *:' + config.port);
+http.listen(process.env.PORT || config.port, function() {
+    console.log('listening on *:' + config.port);
 });
