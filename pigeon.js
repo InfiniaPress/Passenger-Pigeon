@@ -52,7 +52,6 @@ io.on('connection', function(socket) {
 });
 
 io.on('connection', function(socket) {
-
         //fs.readFile(__dirname + '/assets/pigeon-final.png', function(err, buf){
         // socket.emit('image', { image: true, buffer: buf.toString('base64') });
         // if(!err){

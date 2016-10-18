@@ -128,13 +128,10 @@
           })
           
           socket.on('imageserver', function(info) {
-              console.log("data received");
               if (info.image) {
                 $('#messages').append('<li><img src=' + info.buffer + '><li>');
                 send("Image sent.", "#003EFF");
-                console.log("inside sent");
               }
-              console.log("outside sent");
           })
           
           socket.on('chat message', function(msg, usr){
