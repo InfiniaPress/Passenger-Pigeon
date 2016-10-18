@@ -15,7 +15,6 @@
     
   <body>
     <ul id="messages">
-    <img id="img">
     </ul>
     <ul id="messages"></ul>
     <form action="">
@@ -65,7 +64,6 @@
               if (this.files && this.files[0]) {
                 var FR= new FileReader();
                 FR.onload = function(e) {
-                  $("img").attr("src", e.target.result);
                   socket.emit('image', e.target.result);
                 };       
                 FR.readAsDataURL( this.files[0] );
@@ -129,12 +127,12 @@
               send(usr.username + " has disconnected.", usr.color);
           })
           
-          socket.on("image", function(info) {
+          socket.on('imageserver', function(info) {
               if (info.image) {
-                $('#messages').append('<li><img src=' + info.buffer + '"><li>');
-                alert(info.buffer);
+                $('#messages').append('<li><img src=' + info.buffer + '><li>');
+                send("Image sent.", "#003EFF");
               }
-          });
+          })
           
           socket.on('chat message', function(msg, usr){
               msg = msg.replace(":)", "🙂");
@@ -162,6 +160,6 @@
           
       </script>
   </body>
-<<<<<<< HEAD
+
 </html>
-</html>
+

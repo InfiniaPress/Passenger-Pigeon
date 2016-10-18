@@ -47,7 +47,7 @@ io.on('connection', function(socket) {
 
 io.on('connection', function(socket) {
     socket.on('image', function(url) {
-            socket.emit('image', {
+            socket.emit('imageserver', {
                 image: true,
                 buffer: url
             });
