@@ -29,6 +29,12 @@ io.on('connection', function(socket) {
             color: socket.color
         });
     });
+    socket.on('image', function(url) {
+        io.emit('imageserver', {
+             image: true,
+             buffer: url
+        });
+    });
     socket.on('not typing', function() {
         io.emit('not typing', {
             username: socket.username,
@@ -46,12 +52,7 @@ io.on('connection', function(socket) {
 });
 
 io.on('connection', function(socket) {
-    socket.on('image', function(url) {
-            socket.emit('imageserver', {
-                image: true,
-                buffer: url
-            });
-    });
+
         //fs.readFile(__dirname + '/assets/pigeon-final.png', function(err, buf){
         // socket.emit('image', { image: true, buffer: buf.toString('base64') });
         // if(!err){
