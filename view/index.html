@@ -25,14 +25,21 @@
     
     
   <body>
+<<<<<<< HEAD
     <ul id="messages">
     <img id="img">
     </ul>
+=======
+    <ul id="messages"></ul>
+>>>>>>> fb2220796d93dbb1dcec860aa4ef09089da3b246
     <form action="">
       <i id="typing" style="text-align: center;"></i><br>
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+<<<<<<< HEAD
     <input id="file" type='file' onchange="readURL(this)"/>
+=======
+>>>>>>> fb2220796d93dbb1dcec860aa4ef09089da3b246
       
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.rawgit.com/Nickersoft/push.js/master/push.js"></script>
@@ -50,6 +57,7 @@
               window.scrollTo(0,document.body.scrollHeight);
           }
         
+<<<<<<< HEAD
           $("#file").on("change", readURL());
         
           function readURL(el) {
@@ -64,6 +72,8 @@
           };
 
         
+=======
+>>>>>>> fb2220796d93dbb1dcec860aa4ef09089da3b246
           if(username){
               socket.emit('connection info', username, usercolor);
           }
@@ -122,7 +132,11 @@
           
           socket.on("image", function(info) {
               if (info.image) {
+<<<<<<< HEAD
                 $('#messages').append('<li><img src=' + info.buffer + '"><li>');
+=======
+                $('#messages').append('<li><img src="data:image/png;base64,' + info.buffer + '"><li>');
+>>>>>>> fb2220796d93dbb1dcec860aa4ef09089da3b246
               }
           });
           
@@ -152,4 +166,8 @@
           
       </script>
   </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> fb2220796d93dbb1dcec860aa4ef09089da3b246
