@@ -31,19 +31,15 @@ io.on('connection', function(socket){
 });
 
 io.on('connection', function(socket){
-<<<<<<< HEAD
        socket.on('image', function(url){
            socket.emit('image', { image: true, buffer: url });
        })
-          
-=======
           //fs.readFile(__dirname + '/assets/pigeon-final.png', function(err, buf){
            // socket.emit('image', { image: true, buffer: buf.toString('base64') });
            // if(!err){
             //  console.log('image test success');
            // }
         //  });
->>>>>>> fb2220796d93dbb1dcec860aa4ef09089da3b246
         console.log('Passenger Pigeon >> a user connected');
     socket.on('disconnect', function(){
         socket.broadcast.emit('user left', {
