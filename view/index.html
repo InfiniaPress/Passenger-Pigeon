@@ -16,16 +16,18 @@
   <body>
     <ul id="messages">
     </ul>
-    <ul id="messages"></ul>
     <form action="">
       <i id="typing" style="text-align: center;"></i><br>
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
-    <input id="file" type='file'/>
+    <input name="file" type="file" id="file" />
+    <label for="file">Send image</label>
       
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.rawgit.com/Nickersoft/push.js/master/push.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://requirejs.org/docs/release/2.2.0/minified/require.js"></script>
       <script>
           var socket = io();
           var username = prompt("What's your name?");
@@ -79,6 +81,7 @@
               $('#messages').append('<li' + ' style="color:' + color + '">' + message + '</li>');
               if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 45) {
                  $("form").css("position", "static");
+                 $("label").css("position", "static");
                  autoscroll();
               }
           }
@@ -130,6 +133,7 @@
           socket.on('imageserver', function(info) {
               if (info.image) {
                 $('#messages').append('<li><img src=' + info.buffer + '><li>');
+                autoscroll();
               }
           })
           
