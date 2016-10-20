@@ -1,91 +1,100 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    background: black;
+  background: black;
+  transition-duration: 0.5s;
 }
 
 body {
-    font: 13px Courier;
+  font: 13px Courier;
 }
 
 form {
-    background: black;
-    padding: 3px;
-    position: fixed;
-    bottom: 20px;
-    width: 100%;
+  background: black;
+  padding: 3px;
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
 }
 
 form input {
-    border: 1px solid #00ff00;
-    padding: 10px;
-    width: 90%;
-    margin-right: .5%;
-    background: black;
-    color: #00ff00;
-    font-family: "courier";
+  border: 1px solid #00ff00;
+  padding: 10px;
+  width: 90%;
+  margin-right: .5%;
+  background: black;
+  color: #00ff00;
+  font-family: "courier";
 }
 
 form input {
-    border-radius: 15px;
-    outline: none;
+  border-radius: 15px;
+  outline: none;
 }
 
 form button {
-    width: 9%;
-    background: #00ff00;
-    border: none;
-    padding: 10px;
-    color: white;
+  width: 9%;
+  background: #00ff00;
+  border: none;
+  padding: 10px;
+  color: white;
 }
 
 #messages {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background: black;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background: black;
 }
 
 #messages li {
-    padding: 5px 10px;
-    background: #313131;
+  padding: 5px 10px;
+  background: #313131;
 }
 
 #messages li:nth-child(odd) {
-    background: black;
+  background: black;
+}
+
+#themeChange {
+  color:green;
+  top: 0;
+  right: 0;
+  position: fixed;
+  transition-duration: 0.5s;
 }
 
 #file {
-    width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
-#file + label {
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 700;
-    color: #00ff00;
-    background-color: black;
-    display: inline-block;
-    bottom: 0;
-    position: fixed;
+#file+ label {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+  color: #00ff00;
+  background-color: black;
+  display: inline-block;
+  bottom: 0;
+  position: fixed;
+  transition-duration: 0.5s;
 }
 
-#file:focus + label,
-#file + label:hover {
-    color: red;
-    transition-duration: 0.5s;
+#file:focus+ label,
+#file+ label:hover {
+  color: red;
 }
 
-#file:focus + label {
-	outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
+#file:focus+ label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
 }

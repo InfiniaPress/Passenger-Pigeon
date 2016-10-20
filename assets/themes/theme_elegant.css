@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: white;
+  transition-duration: 0.5s;
+}
+
+#themeChange {
+  top: 0;
+  right: 0;
+  position: fixed;
+  transition-duration: 0.5;
+  display: inline-block;
+	color: black;
+	background-color: #eee;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 12px;
+	padding: 10px 30px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-bottom-width: 3px;
+}
+
+#themeChange:hover {
+  background-color:#00ff00 ;
+  transition-duration: 0.5s;
+}
+
+body {
+  font: 16px helvetica neue;
+}
+
+form {
+  background: white;
+  padding: 3px;
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+}
+
+form input {
+  border: 1px solid black;
+  padding: 10px;
+  width: 90%;
+  margin-right: .5%;
+  background: white;
+  color: black;
+  font-family: "helvetica neue";
+}
+
+form input {
+  border-radius: 15px;
+  outline: none;
+}
+
+form button {
+  width: 9%;
+  background: white;
+  border: 1px solid black;
+  padding: 10px;
+  color: black;
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background: white;
+}
+
+#messages li {
+  padding: 5px 10px;
+  background: #d3d3d3;
+}
+
+#messages li:nth-child(odd) {
+  background: white;
+}
+
+#file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#file+ label {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+  color: black;
+  background-color: none;
+  display: inline-block;
+  bottom: 0;
+  position: fixed;
+}
+
+#file:focus+ label,
+#file+ label:hover {
+  color: red;
+  transition-duration: 0.5s;
+}
+
+#file:focus+ label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
