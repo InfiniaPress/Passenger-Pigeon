@@ -30,6 +30,7 @@ html {
 
 #themeChange:hover {
   background-color:#00ff00 ;
+  box-shadow: 10px 10px 5px #888888;
   transition-duration: 0.5s;
 }
 

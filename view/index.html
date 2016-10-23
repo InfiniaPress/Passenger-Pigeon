@@ -34,24 +34,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
   <script>
-    var currentTheme = "default";
-    document.getElementById('elegant').disabled  = true;
-    document.getElementById('default').disabled  = false;
-    $("#themeChange").on("click", function(){
-      if(currentTheme == "default"){
-        document.getElementById('elegant').disabled  = false;
-        document.getElementById('default').disabled  = true;
-        currentTheme = "elegant";
-      }else if(currentTheme == "elegant"){
-        document.getElementById('elegant').disabled  = true;
-        document.getElementById('default').disabled  = false;
-        currentTheme = "default";
-      }
-    })
     var socket = io();
     var username = prompt("What's your name?");
     var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
-    var usercolor; 
+    var usercolor;
     var colours = ["#003EFF",
       "#00CED1",
       "#00FFCC",
@@ -77,6 +63,51 @@
     ];
     var typing = false;
     usercolor = colours[Math.floor(Math.random() * colours.length)];
+    
+    var currentTheme = "default";
+    document.getElementById('elegant').disabled  = true;
+    document.getElementById('default').disabled  = false;
+    $("#themeChange").on("click", function(){
+      if(currentTheme == "default"){
+        document.getElementById('elegant').disabled  = false;
+        document.getElementById('default').disabled  = true;
+        currentTheme = "elegant";
+        colours = ['#e21400', '#91580f', '#f8a700', '#f78b00',
+    '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
+    '#3b88eb', '#3824aa', '#a700ff', '#d300e7'];
+        usercolor = colours[Math.floor(Math.random() * colours.length)];
+        socket.emit('changetheme', username, usercolor);
+      }else if(currentTheme == "elegant"){
+        document.getElementById('elegant').disabled  = true;
+        document.getElementById('default').disabled  = false;
+        currentTheme = "default";
+        colours = ["#003EFF",
+          "#00CED1",
+          "#00FFCC",
+          "#0276FD",
+          "#05EDFF",
+          "#0EBFE9",
+          "#1DA237",
+          "#0AC92B",
+          "#24D330",
+          "#2FAA96",
+          "#488214",
+          "#49E9BD",
+          "#5B59BA",
+          "#62B1F6",
+          "#72587F",
+          "#76EE00",
+          "#7F00FF",
+          "#7FFFD4",
+          "#82CFFD",
+          "#820BBB",
+          "#CD0000",
+          "#CDCD00"
+        ];
+        usercolor = colours[Math.floor(Math.random() * colours.length)];
+        socket.emit('changetheme', username, usercolor);
+      }
+    })
 
     function autoscroll() {
       window.scrollTo(0, document.body.scrollHeight);
@@ -84,10 +115,15 @@
 
     $("#file").change(function() {
       if (this.files && this.files[0]) {
+        var file = this.value;
         var FR = new FileReader();
-        FR.onload = function(e) {
-          socket.emit('image', e.target.result);
-        };
+        var extension = file.split('.').pop();
+        if(extension === "jpg" || extension === "png" || extension === "gif"){
+          FR.onload = function(e) {
+            socket.emit('image', e.target.result);
+          };
+        }
+        
         FR.readAsDataURL(this.files[0]);
       }
     });
