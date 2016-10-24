@@ -28,11 +28,20 @@ io.on('connection', function(socket) {
             color: socket.color
         });
     });
-    socket.on('image', function(url) {
-        io.emit('imageserver', {
+    socket.on('file', function(url, ext) {
+        if(["jpg","png","gif"].indexOf(ext) > -1){
+          io.emit('image', {
              image: true,
              buffer: url
-        });
+          });
+        }
+        else if(["mov","mp4","m4v"].indexOf(ext) > -1){
+          io.emit('video', {
+             video: true,
+             buffer: url,
+             ext: ext
+          });
+        }
     });
     socket.on('not typing', function() {
         io.emit('not typing', {

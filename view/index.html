@@ -118,11 +118,9 @@
         var file = this.value;
         var FR = new FileReader();
         var extension = file.split('.').pop();
-        if(extension === "jpg" || extension === "png" || extension === "gif"){
-          FR.onload = function(e) {
-            socket.emit('image', e.target.result);
-          };
-        }
+        FR.onload = function(e) {
+            socket.emit('file', e.target.result, extension);
+        };
         FR.readAsDataURL(this.files[0]);
       }
     });
@@ -185,9 +183,20 @@
       send(usr.username + " has disconnected.", usr.color);
     })
 
-    socket.on('imageserver', function(info) {
+    socket.on('image', function(info) {
       if (info.image) {
         $('#messages').append('<li><img src=' + info.buffer + '><li>');
+        if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
+          $("form").css("position", "static");
+          $("label").css("position", "static");
+          autoscroll();
+        }
+      }
+    })
+    
+    socket.on('video', function(info) {
+      if (info.video) {
+        $('#messages').append('<li><video controls><source type="video/' + info.ext + '"' + 'src=' + info.buffer + '></video><li>');
         if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
           $("form").css("position", "static");
           $("label").css("position", "static");
