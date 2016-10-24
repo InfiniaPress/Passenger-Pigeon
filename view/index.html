@@ -123,7 +123,6 @@
             socket.emit('image', e.target.result);
           };
         }
-        
         FR.readAsDataURL(this.files[0]);
       }
     });
@@ -135,7 +134,7 @@
 
     function send(message, color) {
       $('#messages').append('<li' + ' style="color:' + color + '">' + message + '</li>');
-      if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 45) {
+      if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
         $("form").css("position", "static");
         $("label").css("position", "static");
         autoscroll();
@@ -189,11 +188,16 @@
     socket.on('imageserver', function(info) {
       if (info.image) {
         $('#messages').append('<li><img src=' + info.buffer + '><li>');
-        autoscroll();
+        if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
+          $("form").css("position", "static");
+          $("label").css("position", "static");
+          autoscroll();
+        }
       }
     })
 
     socket.on('chat message', function(msg, usr) {
+      msg = msg.replace(":(", "🙁");
       msg = msg.replace(":)", "🙂");
       msg = msg.replace(":D", "😃");
       msg = msg.replace(":'(", "😭");
