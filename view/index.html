@@ -36,6 +36,7 @@
   <script>
     var socket = io();
     var username = prompt("What's your name?");
+    username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
     var usercolor;
     var colours = ["#003EFF",
@@ -131,6 +132,7 @@
     }
 
     function send(message, color) {
+      message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
       $('#messages').append('<li' + ' style="color:' + color + '">' + message + '</li>');
       if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
         $("form").css("position", "static");
