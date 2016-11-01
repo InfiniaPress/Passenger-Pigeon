@@ -35,11 +35,14 @@
 
   <script>
     var socket = io();
+    var banned = false;
     var username = prompt("What's your name?");
     username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
     var usercolor;
-    var colours = ["#003EFF",
+    var colours = 
+    [
+      "#003EFF",
       "#00CED1",
       "#00FFCC",
       "#0276FD",
@@ -144,12 +147,28 @@
     socket.on('user add', function(usr) {
       send(usr.username + " has joined.", usr.color);
     });
+    
+    socket.on('mute', function(mute){
+      if(username === mute.target){
+        alert("You've been muted by " + mute.sender);
+        banned = true;
+        setTimeout(function () {
+          banned = false;
+        }, 10000);
+      }
+    });
 
 
     $('form').submit(function() {
       if (/\S/.test($("#m").val())) {
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
+        if ($('#m').val().indexOf("/mute") !== -1){
+          socket.emit('mute', username, $('#m').val());
+        }else{
+          if(!banned){
+            socket.emit('chat message', $('#m').val());
+          }
+          $('#m').val('');
+        }
       }
       return false;
     });

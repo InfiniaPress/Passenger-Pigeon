@@ -49,6 +49,10 @@ io.on('connection', function(socket) {
             color: socket.color
         });
     });
+    socket.on('mute', function(user, command){
+        command = command.replace('/mute ', "");
+        io.emit('mute', {sender: user, target: command});
+    });
     socket.on('changetheme', function(usr, color) {
         socket.username = usr;
         socket.color = color;
