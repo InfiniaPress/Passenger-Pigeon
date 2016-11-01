@@ -9,6 +9,6 @@ Step 2: Make sure npm and node is installed.
 
 Step 3: Edit config.json to set your own values. 
 
-Step 4: When you want to deploy, type "node pigeon" to get it up and running. It should say "listening on [your port]".
+Step 4: When you want to deploy, type `node pigeon` to get it up and running. It should say `listening on [your port]`.
 
 Step 5: Enjoy!
