@@ -53,6 +53,13 @@ io.on('connection', function(socket) {
         command = command.replace('/mute ', "");
         io.emit('mute', {sender: user, target: command});
     });
+    socket.on('pm', function(user, command, color){
+        command = command.replace('/pm ', "");
+        command = command.split(' ');
+        var target = command[0];
+        var message = command[1];
+        io.emit('pm', {sender: user, target: target, message: message, color: color});
+    })
     socket.on('changetheme', function(usr, color) {
         socket.username = usr;
         socket.color = color;

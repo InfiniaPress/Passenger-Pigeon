@@ -156,6 +156,14 @@
         }, 10000);
       }
     });
+    
+    socket.on('pm', function(pm){
+      if(username === pm.target){
+        send(pm.sender + ": [PM] " + pm.message, pm.color);
+      }else if(username === pm.sender){
+        send(username + " → " + pm.target + ": " + pm.message, pm.color);
+      }
+    })
 
 
     $('form').submit(function() {
@@ -169,6 +177,8 @@
           }else{
             alert("Wrong password. Go away, you're ugly.")
           }
+        }else if($('#m').val().indexOf("/pm") !== -1){
+          socket.emit('pm', username, $('#m').val(), usercolor);
         }else{
           if(!banned){
             socket.emit('chat message', $('#m').val());

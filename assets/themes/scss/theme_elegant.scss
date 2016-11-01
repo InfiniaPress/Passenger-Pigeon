@@ -1,0 +1,92 @@
+$font-stack: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background: white;
+    transition-duration: 0.5s;
+}
+
+body {
+    font: 13px $font-stack;
+}
+
+form {
+    background: white;
+    padding: 3px;
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    
+    input {
+        border: 2px solid #ff5c33;
+        padding: 10px;
+        width: 90%;
+        margin-right: .5%;
+        background: white;
+        color: black;
+        font: $font-stack;
+        border-radius: 15px;
+        outline: none;
+    }
+    
+    button {
+        width: 9%;
+        background: #ff6600;
+        border: 2px solid #ff6600;
+        border-radius: 5px;
+        padding: 10px;
+        color: white;
+    }
+}
+
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: white;
+    li {
+        padding: 5px 10px;
+        background: white;
+    }
+}
+
+#themeChange {
+  color:green;
+  top: 0;
+  right: 0;
+  position: fixed;
+  transition-duration: 0.5s;
+}
+#file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#file+ label label:hover {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ff00ff;
+  background-color: white;
+  display: inline-block;
+  bottom: 0;
+  position: fixed;
+  transition-duration: 0.5s;
+  
+}
+
+#file:focus+ label {
+    outline: 1px dotted #000 -webkit-focus-ring-color auto 5px;
+}
+
+
+
+
