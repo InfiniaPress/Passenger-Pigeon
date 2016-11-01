@@ -162,7 +162,9 @@
     $('form').submit(function() {
       if (/\S/.test($("#m").val())) {
         if ($('#m').val().indexOf("/mute") !== -1){
-          socket.emit('mute', username, $('#m').val());
+          if(!banned){
+            socket.emit('mute', username, $('#m').val());
+          }
         }else{
           if(!banned){
             socket.emit('chat message', $('#m').val());
