@@ -30,7 +30,7 @@ form {
     width: 9%;
     background: #ff6600;
     border: 2px solid #ff6600;
-    border-radius: 5px;
+    border-radius: 15px;
     padding: 10px;
     color: white; }
 
@@ -58,9 +58,9 @@ form {
   position: absolute;
   z-index: -1; }
 
-#file + label label:hover {
+#file + label {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
   color: #ff00ff;
   background-color: white;
@@ -68,6 +68,9 @@ form {
   bottom: 0;
   position: fixed;
   transition-duration: 0.5s; }
+
+#file + label:hover {
+  color: red; }
 
 #file:focus + label {
   outline: 1px dotted #000 -webkit-focus-ring-color auto 5px; }

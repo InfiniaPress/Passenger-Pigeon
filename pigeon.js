@@ -8,6 +8,11 @@ var events = require('events');
 // Create an eventEmitter object
 var eventEmitter = new events.EventEmitter();
 var config = require('./config.json');
+// Command line arguments 
+var cmd = process.argv[2];
+
+
+
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/view/index.html');
@@ -53,12 +58,8 @@ io.on('connection', function(socket) {
         command = command.replace('/mute ', "");
         io.emit('mute', {sender: user, target: command});
     });
-    socket.on('pm', function(user, command, color){
-        command = command.replace('/pm ', "");
-        command = command.split(' ');
-        var target = command[0];
-        var message = command[1];
-        io.emit('pm', {sender: user, target: target, message: message, color: color});
+    socket.on('pm', function(user, command){
+      
     })
     socket.on('changetheme', function(usr, color) {
         socket.username = usr;
@@ -96,5 +97,6 @@ io.on('connection', function(socket) {
 });
 
 http.listen(process.env.PORT || config.port, function() {
-    console.log('listening on *:' + config.port);
+    console.log('[PP-Start] Listening on localhost:' + config.port);
 });
+
