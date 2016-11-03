@@ -136,6 +136,14 @@ socket.on('mute', function(mute) {
     }
 });
 
+socket.on('ban', function(ban) {
+    if (username === ban.target) {
+        alert("You've been banned by " + "'" + ban.sender + "'");
+        muted = true;
+        banned = true;
+    }
+});
+
 
 $('form').submit(function() {
     if (/\S/.test($("#m").val())) {
@@ -152,6 +160,10 @@ $('form').submit(function() {
             }
         } else if ($('#m').val().indexOf("/pm") !== -1) {
             socket.emit('pm', username, $('#m').val(), usercolor);
+        } else if ($('#m').val().indexOf("/ban") !== -1) {
+            if (!muted) {
+                socket.emit('ban', username, $('#m').val(), usercolor);
+            }
         } else {
             if (!muted) {
                 socket.emit('chat message', $('#m').val());

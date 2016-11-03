@@ -71,6 +71,11 @@ io.on('connection', function(socket) {
            }
         }
     });
+    socket.on('ban', function(user, command, color){
+      command = command.replace('/ban ', "");
+      var target = command;
+      io.emit('ban', {sender: user, target: target, color: color});
+    })
     socket.on('pm', function(user, command, color){
       command = command.replace('/pm ', "");
       command = command.split(' ');
