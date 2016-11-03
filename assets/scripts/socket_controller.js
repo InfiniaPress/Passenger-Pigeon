@@ -170,6 +170,8 @@ $('form').submit(function() {
       if (password === "keane and robert are awesome") {
         if (!muted) {
           socket.emit('unban', username, $('#m').val(), usercolor);
+        } else {
+          alert("You have been muted!");
         }
       } else {
         alert("Wrong password. Go away, you're ugly.")
@@ -179,6 +181,8 @@ $('form').submit(function() {
       if (password === "keane and robert are awesome") {
         if (!muted) {
           socket.emit('ban', username, $('#m').val(), usercolor);
+        } else {
+          alert("You have been muted!")
         }
       } else {
         alert("Wrong password. Go away, you're ugly.")
