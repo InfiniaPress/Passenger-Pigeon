@@ -98,11 +98,9 @@ io.on('connection', function(socket) {
   })
   socket.on('pm', function(user, command, color) {
     command = command.replace('/pm ', "");
-    command = command.split(' ');
+    command = command.split('/');
     var target = command[0];
-    command.shift();
-    var message = command.join();
-    message = message.replace(/,/g, " ");
+    var message = command[1]
     io.emit('pm', {
       sender: user,
       target: target,
