@@ -11,6 +11,7 @@
 
 
 var socket = io();
+var muted = false;
 var banned = false;
 var username = prompt("What's your name?");
 username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -127,11 +128,11 @@ socket.on('user add', function(usr) {
 
 socket.on('mute', function(mute) {
     if (username === mute.target) {
-        alert("You've been muted by " + "'" + mute.sender + "'" + ".");
-        banned = true;
+        alert("You've been muted by " + "'" + mute.sender + "'");
+        muted = true;
         setTimeout(function() {
-            banned = false;
-        }, 10000);
+            muted = false;
+        }, mute.duration);
     }
 });
 
@@ -141,17 +142,21 @@ $('form').submit(function() {
         if ($('#m').val().indexOf("/mute") !== -1) {
             var password = prompt("What is the mute password?");
             if (password === "keane and robert are awesome") {
-                if (!banned) {
+                if (!muted) {
                     socket.emit('mute', username, $('#m').val());
+                } else {
+                   alert("You have been muted!");
                 }
             } else {
-                alert("Wrong password. Go away, you're ugly.")
+                alert("Wrong password. Go away, you're ugly.");
             }
         } else if ($('#m').val().indexOf("/pm") !== -1) {
-            socket.emit('pm', username, $('#m').val());
+            socket.emit('pm', username, $('#m').val(), usercolor);
         } else {
-            if (!banned) {
+            if (!muted) {
                 socket.emit('chat message', $('#m').val());
+            } else {
+                alert("You have been muted!");
             }
         }
     }
@@ -166,7 +171,7 @@ function timeoutFunction() {
 
 $("form input").on("keydown", function(e) {
     if (e.which !== 13) {
-        if (typing == false) {
+        if (typing === false) {
             typing = true
             socket.emit("typing");
             timeout = setTimeout(timeoutFunction, 2000);
@@ -188,6 +193,14 @@ socket.on('not typing', function(usr) {
 
 socket.on('user left', function(usr) {
     send(usr.username + " has disconnected.", usr.color);
+})
+
+socket.on('pm', function(pm){
+     if(username === pm.target){
+        send(pm.sender + ": [PM] " + pm.message, pm.color);
+     }else if(username === pm.sender){
+        send(username + " → " + pm.target + ": " + pm.message, pm.color);
+     }
 })
 
 socket.on('image', function(info) {

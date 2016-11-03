@@ -56,10 +56,29 @@ io.on('connection', function(socket) {
     });
     socket.on('mute', function(user, command){
         command = command.replace('/mute ', "");
-        io.emit('mute', {sender: user, target: command});
+        command = command.split(' ');
+        var target = command[0];
+        var time = command[1];
+        if(time.indexOf("s") >= 0){
+           time = time.replace('s', "");
+           io.emit('mute', {sender: user, target: target, duration: time*1000});
+        }else if(time.indexOf("h") >= 0){
+           time = time.replace('h', "");
+           if(time > config.maxBanTime){
+            
+           }else{
+             io.emit('mute', {sender: user, target: target, duration: time*1000*60});
+           }
+        }
     });
-    socket.on('pm', function(user, command){
-      
+    socket.on('pm', function(user, command, color){
+      command = command.replace('/pm ', "");
+      command = command.split(' ');
+      var target = command[0];
+      command.shift();
+      var message = command.join();
+      message = message.replace(/,/g , " ");
+      io.emit('pm', {sender: user, target: target, message: message, color: color});
     })
     socket.on('changetheme', function(usr, color) {
         socket.username = usr;
