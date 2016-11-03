@@ -15,112 +15,136 @@ var cmd = process.argv[2];
 
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/view/index.html');
+  res.sendFile(__dirname + '/view/index.html');
 });
 
 app.use(express.static(__dirname + '/assets'));
 
 io.on('connection', function(socket) {
-    socket.on('chat message', function(msg) {
-        io.emit('chat message', msg, {
-            username: socket.username,
-            color: socket.color
+  socket.on('chat message', function(msg) {
+    io.emit('chat message', msg, {
+      username: socket.username,
+      color: socket.color
+    });
+  });
+  socket.on('typing', function() {
+    io.emit('typing', {
+      username: socket.username,
+      color: socket.color
+    });
+  });
+  socket.on('file', function(url, ext) {
+    if (["jpg", "png", "gif"].indexOf(ext) > -1) {
+      io.emit('image', {
+        image: true,
+        buffer: url
+      });
+    } else if (["mov", "mp4", "m4v"].indexOf(ext) > -1) {
+      io.emit('video', {
+        video: true,
+        buffer: url,
+        ext: ext
+      });
+    }
+  });
+  socket.on('not typing', function() {
+    io.emit('not typing', {
+      username: socket.username,
+      color: socket.color
+    });
+  });
+  socket.on('mute', function(user, command) {
+    command = command.replace('/mute ', "");
+    command = command.split(' ');
+    var target = command[0];
+    var time = command[1];
+    if (time.indexOf("s") >= 0) {
+      time = time.replace('s', "");
+      io.emit('mute', {
+        sender: user,
+        target: target,
+        duration: time * 1000
+      });
+    } else if (time.indexOf("h") >= 0) {
+      time = time.replace('h', "");
+      if (time > config.maxBanTime) {
+
+      } else {
+        io.emit('mute', {
+          sender: user,
+          target: target,
+          duration: time * 1000 * 60
         });
+      }
+    }
+  });
+  socket.on('ban', function(user, command, color) {
+    command = command.replace('/ban ', "");
+    var target = command;
+    io.emit('ban', {
+      sender: user,
+      target: target,
+      color: color
     });
-    socket.on('typing', function() {
-        io.emit('typing', {
-            username: socket.username,
-            color: socket.color
-        });
+  })
+  socket.on('unban', function(user, command, color) {
+    command = command.replace('/unban ', "");
+    var target = command;
+    io.emit('unban', {
+      sender: user,
+      target: target,
+      color: color
     });
-    socket.on('file', function(url, ext) {
-        if(["jpg","png","gif"].indexOf(ext) > -1){
-          io.emit('image', {
-             image: true,
-             buffer: url
-          });
-        }
-        else if(["mov","mp4","m4v"].indexOf(ext) > -1){
-          io.emit('video', {
-             video: true,
-             buffer: url,
-             ext: ext
-          });
-        }
+  })
+  socket.on('pm', function(user, command, color) {
+    command = command.replace('/pm ', "");
+    command = command.split(' ');
+    var target = command[0];
+    command.shift();
+    var message = command.join();
+    message = message.replace(/,/g, " ");
+    io.emit('pm', {
+      sender: user,
+      target: target,
+      message: message,
+      color: color
     });
-    socket.on('not typing', function() {
-        io.emit('not typing', {
-            username: socket.username,
-            color: socket.color
-        });
-    });
-    socket.on('mute', function(user, command){
-        command = command.replace('/mute ', "");
-        command = command.split(' ');
-        var target = command[0];
-        var time = command[1];
-        if(time.indexOf("s") >= 0){
-           time = time.replace('s', "");
-           io.emit('mute', {sender: user, target: target, duration: time*1000});
-        }else if(time.indexOf("h") >= 0){
-           time = time.replace('h', "");
-           if(time > config.maxBanTime){
-            
-           }else{
-             io.emit('mute', {sender: user, target: target, duration: time*1000*60});
-           }
-        }
-    });
-    socket.on('ban', function(user, command, color){
-      command = command.replace('/ban ', "");
-      var target = command;
-      io.emit('ban', {sender: user, target: target, color: color});
+  })
+  socket.on('changetheme', function(usr, color) {
+    socket.username = usr;
+    socket.color = color;
+    io.emit('changetheme', {
+      username: usr,
+      color: color
     })
-    socket.on('pm', function(user, command, color){
-      command = command.replace('/pm ', "");
-      command = command.split(' ');
-      var target = command[0];
-      command.shift();
-      var message = command.join();
-      message = message.replace(/,/g , " ");
-      io.emit('pm', {sender: user, target: target, message: message, color: color});
-    })
-    socket.on('changetheme', function(usr, color) {
-        socket.username = usr;
-        socket.color = color;
-        io.emit('changetheme', {
-            username: usr,
-            color: color
-        })
-    })
-    socket.on('connection info', function(usr, color) {
-        socket.username = usr;
-        socket.color = color;
-        io.emit('user add', {
-            username: usr,
-            color: color
-        });
+  })
+  socket.on('connection info', function(usr, color) {
+    socket.username = usr;
+    socket.color = color;
+    io.emit('user add', {
+      username: usr,
+      color: color
     });
+  });
 });
 
 io.on('connection', function(socket) {
-        //fs.readFile(__dirname + '/assets/pigeon-final.png', function(err, buf){
-        // socket.emit('image', { image: true, buffer: buf.toString('base64') });
-        // if(!err){
-        //  console.log('image test success');
-        // }
-        //  });
-    console.log('Passenger Pigeon >> a user connected');
-    socket.on('disconnect', function() {
-        socket.broadcast.emit('user left', {
-            username: socket.username,
-            color: socket.color,
-        });
-        console.log('Passenger Pigeon >> user disconnected');
+  //fs.readFile(__dirname + '/assets/pigeon-final.png', function(err, buf){
+  // socket.emit('image', { image: true, buffer: buf.toString('base64') });
+  // if(!err){
+  //  console.log('image test success');
+  // }
+  //  });
+  console.log('Passenger Pigeon >> a user connected');
+  socket.on('disconnect', function() {
+    socket.broadcast.emit('user left', {
+      username: socket.username,
+      color: socket.color,
     });
+    console.log('Passenger Pigeon >> user disconnected');
+  });
 });
 
 http.listen(process.env.PORT || config.port, function() {
-    console.log('[PP-Start] Listening on localhost:' + config.port);
+  console.log('[PP-Start] Listening on localhost:' + config.port);
 });
-
