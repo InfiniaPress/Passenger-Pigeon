@@ -154,7 +154,7 @@ $('form').submit(function() {
   if (/\S/.test($("#m").val())) {
     if ($('#m').val().indexOf("/mute") !== -1) {
       password = prompt("What is the mute password?");
-      if (password === "keane and robert are awesome") {
+      if (password === "keane and robert") {
         if (!muted) {
           socket.emit('mute', username, $('#m').val());
         } else {
@@ -167,7 +167,7 @@ $('form').submit(function() {
       socket.emit('pm', username, $('#m').val(), usercolor);
     } else if ($('#m').val().indexOf("/unban") !== -1) {
       password = prompt("What is the unbanning password?");
-      if (password === "keane and robert are awesome") {
+      if (password === "hundotte and derpz") {
         if (!muted) {
           socket.emit('unban', username, $('#m').val(), usercolor);
         } else {
@@ -178,7 +178,7 @@ $('form').submit(function() {
       }
     } else if ($('#m').val().indexOf("/ban") !== -1) {
       password = prompt("What is the ban password?");
-      if (password === "keane and robert are awesome") {
+      if (password === "keanestar and lobert") {
         if (!muted) {
           socket.emit('ban', username, $('#m').val(), usercolor);
         } else {
