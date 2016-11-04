@@ -262,14 +262,6 @@ socket.on('video', function(info) {
 
 socket.on('chat message', function(msg, usr) {
 if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  msg = msg.replace(":(", "🙁");
-  msg = msg.replace(":)", "🙂");
-  msg = msg.replace(":D", "😃");
-  msg = msg.replace(":'(", "😭");
-  msg = msg.replace(":-|", "😑");
-  msg = msg.replace(":-O", "😱");
-  msg = msg.replace(":P", "😛");
-  msg = msg.replace("X-(", "😡");
   if (usr.username !== username) {
     Push.create('Passenger Pigeon', {
       body: usr.username + ": " + msg,
@@ -284,5 +276,13 @@ if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navig
     notification.play();
   }
 }
+  msg = msg.replace(":(", "🙁");
+  msg = msg.replace(":)", "🙂");
+  msg = msg.replace(":D", "😃");
+  msg = msg.replace(":'(", "😭");
+  msg = msg.replace(":-|", "😑");
+  msg = msg.replace(":-O", "😱");
+  msg = msg.replace(":P", "😛");
+  msg = msg.replace("X-(", "😡");
   send(usr.username + ": " + msg, usr.color);
 });
