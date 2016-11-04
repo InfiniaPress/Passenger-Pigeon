@@ -261,6 +261,7 @@ socket.on('video', function(info) {
 })
 
 socket.on('chat message', function(msg, usr) {
+if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   msg = msg.replace(":(", "🙁");
   msg = msg.replace(":)", "🙂");
   msg = msg.replace(":D", "😃");
@@ -282,5 +283,6 @@ socket.on('chat message', function(msg, usr) {
     });
     notification.play();
   }
+}
   send(usr.username + ": " + msg, usr.color);
 });
