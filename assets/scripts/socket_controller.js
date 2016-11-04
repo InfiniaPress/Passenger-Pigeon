@@ -9,6 +9,11 @@
  *
  */
 
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  if (window.navigator.standalone === false) {
+    alert("For best user experience please add to Home Screen as a mobile app.");
+  }
+}
 
 var socket = io();
 var muted = false;
@@ -261,21 +266,21 @@ socket.on('video', function(info) {
 })
 
 socket.on('chat message', function(msg, usr) {
-if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  if (usr.username !== username) {
-    Push.create('Passenger Pigeon', {
-      body: usr.username + ": " + msg,
-      icon: "https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/pigeon-final.png",
-      timeout: 4000,
-      onClick: function() {
-        window.focus();
-        this.close();
-      },
-      vibrate: [200, 100, 200, 100, 200, 100, 200]
-    });
-    notification.play();
+  if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    if (usr.username !== username) {
+      Push.create('Passenger Pigeon', {
+        body: usr.username + ": " + msg,
+        icon: "https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/pigeon-final.png",
+        timeout: 4000,
+        onClick: function() {
+          window.focus();
+          this.close();
+        },
+        vibrate: [200, 100, 200, 100, 200, 100, 200]
+      });
+      notification.play();
+    }
   }
-}
   msg = msg.replace(":(", "🙁");
   msg = msg.replace(":)", "🙂");
   msg = msg.replace(":D", "😃");
