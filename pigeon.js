@@ -37,13 +37,18 @@ io.on('connection', function(socket) {
     if (["jpg", "png", "gif"].indexOf(ext) > -1) {
       io.emit('image', {
         image: true,
-        buffer: url
+        buffer: url,
+        ext: ext,
+        sender: socket.username,
+        color: socket.color
       });
     } else if (["mov", "mp4", "m4v"].indexOf(ext) > -1) {
       io.emit('video', {
         video: true,
         buffer: url,
-        ext: ext
+        ext: ext,
+        sender: socket.username,
+        color: socket.color
       });
     }
   });

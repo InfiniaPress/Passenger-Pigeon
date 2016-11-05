@@ -245,7 +245,7 @@ socket.on('pm', function(pm) {
 
 socket.on('image', function(info) {
   if (info.image) {
-    $('#messages').append('<li><img src=' + info.buffer + '><li>');
+    $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent an image:</p><img src=' + info.buffer + '>' + "<br><a href = '" + info.buffer + "' download='image." + info.ext + "'>Download</a>" + '</li>' );
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
       $("label").css("position", "static");
@@ -256,7 +256,7 @@ socket.on('image', function(info) {
 
 socket.on('video', function(info) {
   if (info.video) {
-    $('#messages').append('<li><video controls><source type="video/' + info.ext + '"' + 'src=' + info.buffer + '></video><li>');
+    $('#messages').append('<li><p>' + info.sender + ' sent a video:</p><video controls><source type="video/' + info.ext + '"' + 'src=' + info.buffer + '></video>' + "<br><a href = '" + info.buffer + "' download='video." + info.ext + "'>Download</a>" +'</li>');
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
       $("label").css("position", "static");
