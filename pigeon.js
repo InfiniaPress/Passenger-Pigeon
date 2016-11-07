@@ -22,20 +22,20 @@ app.use(express.static(__dirname + '/assets'));
 
 io.on('connection', function(socket) {
   socket.on('chat message', function(msg) {
-    io.emit('chat message', msg, {
+    io.to(socket.room).emit('chat message', msg, {
       username: socket.username,
       color: socket.color
     });
   });
   socket.on('typing', function() {
-    io.emit('typing', {
+    io.to(socket.room).emit('typing', {
       username: socket.username,
       color: socket.color
     });
   });
   socket.on('file', function(url, ext) {
     if (["jpg", "png", "gif"].indexOf(ext) > -1) {
-      io.emit('image', {
+     io.to(socket.room).emit('image', {
         image: true,
         buffer: url,
         ext: ext,
@@ -43,7 +43,7 @@ io.on('connection', function(socket) {
         color: socket.color
       });
     } else if (["mov", "mp4", "m4v"].indexOf(ext) > -1) {
-      io.emit('video', {
+      io.to(socket.room).emit('video', {
         video: true,
         buffer: url,
         ext: ext,
@@ -53,7 +53,7 @@ io.on('connection', function(socket) {
     }
   });
   socket.on('not typing', function() {
-    io.emit('not typing', {
+    io.to(socket.room).emit('not typing', {
       username: socket.username,
       color: socket.color
     });
@@ -65,7 +65,7 @@ io.on('connection', function(socket) {
     var time = command[1];
     if (time.indexOf("s") >= 0) {
       time = time.replace('s', "");
-      io.emit('mute', {
+      io.to(socket.room).emit('mute', {
         sender: user,
         target: target,
         duration: time * 1000
@@ -75,7 +75,7 @@ io.on('connection', function(socket) {
       if (time > config.maxBanTime) {
 
       } else {
-        io.emit('mute', {
+        io.to(socket.room).emit('mute', {
           sender: user,
           target: target,
           duration: time * 1000 * 60
@@ -86,7 +86,7 @@ io.on('connection', function(socket) {
   socket.on('ban', function(user, command, color) {
     command = command.replace('/ban ', "");
     var target = command;
-    io.emit('ban', {
+    io.to(socket.room).emit('ban', {
       sender: user,
       target: target,
       color: color
@@ -95,7 +95,7 @@ io.on('connection', function(socket) {
   socket.on('unban', function(user, command, color) {
     command = command.replace('/unban ', "");
     var target = command;
-    io.emit('unban', {
+    io.to(socket.room).emit('unban', {
       sender: user,
       target: target,
       color: color
@@ -106,7 +106,7 @@ io.on('connection', function(socket) {
     command = command.split('/');
     var target = command[0];
     var message = command[1]
-    io.emit('pm', {
+    io.to(socket.room).emit('pm', {
       sender: user,
       target: target,
       message: message,
@@ -116,15 +116,17 @@ io.on('connection', function(socket) {
   socket.on('changetheme', function(usr, color) {
     socket.username = usr;
     socket.color = color;
-    io.emit('changetheme', {
+    io.to(socket.room).emit('changetheme', {
       username: usr,
       color: color
     })
   })
-  socket.on('connection info', function(usr, color) {
+  socket.on('connection info', function(usr, color, room) {
     socket.username = usr;
     socket.color = color;
-    io.emit('user add', {
+    socket.room = room;
+    socket.join(socket.room);
+    io.to(socket.room).emit('user add', {
       username: usr,
       color: color
     });
