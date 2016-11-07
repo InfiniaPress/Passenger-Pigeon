@@ -4,7 +4,7 @@
  * Passenger Pigeon
  * ------------------------------
  * Socket Controller
- * v1.0.7
+ * v1.2.0
  * Created and modified by Hundotte and xiurobert
  *
  */
@@ -20,6 +20,7 @@ var muted = false;
 var password;
 var username = prompt("What's your name?");
 username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+var roomId = prompt("Would you like to join a chat room? If so, please enter the room's ID, or create a new one.").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
 var usercolor;
 var colours = [
@@ -239,6 +240,14 @@ socket.on('pm', function(pm) {
   if (username === pm.target) {
     send(pm.sender + ": [PM] " + pm.message, pm.color);
   } else if (username === pm.sender) {
+    pm.message = pm.message.replace(":(", "🙁");
+    pm.message = pm.message.replace(":)", "🙂");
+    pm.message = pm.message.replace(":D", "😃");
+    pm.message = pm.message.replace(":'(", "😭");
+    pm.message = pm.message.replace(":-|", "😑");
+    pm.message = pm.message.replace(":-O", "😱");
+    pm.message = pm.message.replace(":P", "😛");
+    pm.message = pm.message.replace("X-(", "😡");
     send(username + " → " + pm.target + ": " + pm.message, pm.color);
   }
 })
