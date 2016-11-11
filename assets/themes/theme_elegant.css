@@ -50,6 +50,10 @@ form {
   position: fixed;
   transition-duration: 0.5s; }
 
+#themeChange:hover{
+  box-shadow: 0 15px 19px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 #file {
   width: 0.1px;
   height: 0.1px;

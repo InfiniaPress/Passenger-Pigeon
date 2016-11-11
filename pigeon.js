@@ -10,18 +10,32 @@ var eventEmitter = new events.EventEmitter();
 var config = require('./config.json');
 // Command line arguments 
 var cmd = process.argv[2];
-
-
+var redisClient = require('redis-connection')();
 
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/view/index.html');
+  var messages = redisClient.lrange('messages', 0, 99, function(err, reply) {
+    if (!err) {
+      var result = [];
+      // Loop through the list, parsing each item into an object
+      for (var msg in reply) result.push(JSON.parse(reply[msg]));
+      // Pass the message list to the view
+      res.sendFile(__dirname + '/view/index.html');
+      io.emit('history', {
+        messages: result
+      });
+    } else {
+      res.sendFile(__dirname + '/view/index.html');
+    }
+  })
 });
 
 app.use(express.static(__dirname + '/assets'));
 
 io.on('connection', function(socket) {
   socket.on('chat message', function(msg) {
+    redisClient.lpush('messages', JSON.stringify(msg));
+    redisClient.ltrim('messages', 0, 99);
     io.to(socket.room).emit('chat message', msg, {
       username: socket.username,
       color: socket.color
@@ -35,7 +49,7 @@ io.on('connection', function(socket) {
   });
   socket.on('file', function(url, ext) {
     if (["jpg", "png", "gif"].indexOf(ext) > -1) {
-     io.to(socket.room).emit('image', {
+      io.to(socket.room).emit('image', {
         image: true,
         buffer: url,
         ext: ext,
