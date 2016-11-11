@@ -11,7 +11,7 @@ var config = require('./config.json');
 // Command line arguments 
 var cmd = process.argv[2];
 var redisClient = require('redis-connection')();
-
+var users = [];
 
 app.get('/', function(req, res) {
   var messages = redisClient.lrange('messages', 0, 99, function(err, reply) {
@@ -97,25 +97,25 @@ io.on('connection', function(socket) {
       }
     }
   });
-  socket.on('ban', function(user, command, color) {
+  socket.on('ban', function(user, command) {
     command = command.replace('/ban ', "");
     var target = command;
     io.to(socket.room).emit('ban', {
       sender: user,
       target: target,
-      color: color
+      color: socket.color
     });
-  })
-  socket.on('unban', function(user, command, color) {
+  });
+  socket.on('unban', function(user, command) {
     command = command.replace('/unban ', "");
     var target = command;
     io.to(socket.room).emit('unban', {
       sender: user,
       target: target,
-      color: color
+      color: socket.color
     });
-  })
-  socket.on('pm', function(user, command, color) {
+  });
+  socket.on('pm', function(user, command) {
     command = command.replace('/pm ', "");
     command = command.split('/');
     var target = command[0];
@@ -124,26 +124,31 @@ io.on('connection', function(socket) {
       sender: user,
       target: target,
       message: message,
-      color: color
+      color: socket.color
     });
-  })
+  });
   socket.on('changetheme', function(usr, color) {
     socket.username = usr;
     socket.color = color;
     io.to(socket.room).emit('changetheme', {
       username: usr,
-      color: color
-    })
-  })
+      color: socket.color
+    });
+  });
   socket.on('connection info', function(usr, color, room) {
     socket.username = usr;
     socket.color = color;
     socket.room = room;
     socket.join(socket.room);
-    io.to(socket.room).emit('user add', {
-      username: usr,
-      color: color
-    });
+    if (users.indexOf(usr) > -1) {
+      socket.emit('repeat username');
+    } else {
+      io.to(socket.room).emit('user add', {
+        username: usr,
+        color: color
+      });
+      users.push(usr);
+    }
   });
 });
 

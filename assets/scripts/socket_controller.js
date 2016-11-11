@@ -14,7 +14,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     alert("For best user experience please add to Home Screen as a mobile app.");
   }
 }
-
+var users = [];
 var socket = io();
 var muted = false;
 var password;
@@ -22,14 +22,15 @@ var username = prompt("What's your name?");
 username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var roomId = prompt("Please enter your chat room's ID, or create a new one.").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
-var usercolor;
-  //socket.on('history', function(info) {
-    //for (var i = 0, ln = info.messages.length; i < ln; i++) {
-      //send(info.messages[i], usercolor);
-      //alert(info.messages[i]);
-    //}
-  //});
-var colours = [
+var defaultColor;
+var elegantColor;
+//socket.on('history', function(info) {
+//for (var i = 0, ln = info.messages.length; i < ln; i++) {
+//send(info.messages[i], usercolor);
+//alert(info.messages[i]);
+//}
+//});
+var defaultColours = [
   "#003EFF",
   "#00CED1",
   "#00FFCC",
@@ -53,9 +54,27 @@ var colours = [
   "#CD0000",
   "#CDCD00"
 ];
-var typing = false;
-usercolor = colours[Math.floor(Math.random() * colours.length)];
 
+var elegantColors = [
+  '#e21400',
+  '#91580f',
+  '#f8a700',
+  '#f78b00',
+  '#58dc00',
+  '#287b00',
+  '#a8f07a',
+  '#4ae8c4',
+  '#3b88eb',
+  '#3824aa',
+  '#a700ff',
+  '#d300e7'
+];
+
+var typing = false;
+
+defaultColor = defaultColours[Math.floor(Math.random() * defaultColours.length)];
+
+elegantColor = elegantColors[Math.floor(Math.random() * elegantColors.length)];
 
 var currentTheme = "default";
 document.getElementById('elegant').disabled = true;
@@ -65,12 +84,7 @@ $("#themeChange").on("click", function() {
     document.getElementById('elegant').disabled = false;
     document.getElementById('default').disabled = true;
     currentTheme = "elegant";
-    colours = ['#e21400', '#91580f', '#f8a700', '#f78b00',
-      '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
-      '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
-    ];
-    usercolor = colours[Math.floor(Math.random() * colours.length)];
-    socket.emit('changetheme', username, usercolor);
+    socket.emit('changetheme', username, elegantColor);
   } else if (currentTheme == "elegant") {
     document.getElementById('elegant').disabled = true;
     document.getElementById('default').disabled = false;
@@ -98,8 +112,7 @@ $("#themeChange").on("click", function() {
       "#CD0000",
       "#CDCD00"
     ];
-    usercolor = colours[Math.floor(Math.random() * colours.length)];
-    socket.emit('changetheme', username, usercolor);
+    socket.emit('changetheme', username, defaultColor);
   }
 })
 
@@ -121,7 +134,7 @@ $("#file").change(function() {
 
 
 if (username && roomId) {
-  socket.emit('connection info', username, usercolor, roomId);
+  socket.emit('connection info', username, defaultColor, roomId);
 }
 
 function send(message, color) {
@@ -134,8 +147,17 @@ function send(message, color) {
   }
 }
 
+socket.on('repeat username', function(usr) {
+  muted = true;
+  alert("That username is already chosen! Please pick another.");
+  username = prompt("What is your username?");
+  socket.emit('connection info', username, defaultColor, roomId);
+})
+
 socket.on('user add', function(usr) {
+  muted = false;
   send(usr.username + " has joined.", usr.color);
+  users.push(usr.username);
 });
 
 
@@ -178,12 +200,12 @@ $('form').submit(function() {
         alert("Wrong password. Go away, you're ugly.");
       }
     } else if ($('#m').val().indexOf("/pm") !== -1) {
-      socket.emit('pm', username, $('#m').val(), usercolor);
+      socket.emit('pm', username, $('#m').val());
     } else if ($('#m').val().indexOf("/unban") !== -1) {
       password = prompt("What is the unbanning password?");
       if (password === "hundotte and derpz") {
         if (!muted) {
-          socket.emit('unban', username, $('#m').val(), usercolor);
+          socket.emit('unban', username, $('#m').val());
         } else {
           alert("You have been muted!");
         }
@@ -194,7 +216,7 @@ $('form').submit(function() {
       password = prompt("What is the ban password?");
       if (password === "keanestar and lobert") {
         if (!muted) {
-          socket.emit('ban', username, $('#m').val(), usercolor);
+          socket.emit('ban', username, $('#m').val());
         } else {
           alert("You have been muted!")
         }

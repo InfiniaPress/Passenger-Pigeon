@@ -68,6 +68,10 @@ form button {
   transition-duration: 0.5s;
 }
 
+#themeChange:hover {
+  color:red;
+}
+
 #file {
   width: 0.1px;
   height: 0.1px;
