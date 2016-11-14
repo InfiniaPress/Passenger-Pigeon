@@ -13,6 +13,10 @@ var cmd = process.argv[2];
 //var redisClient = require('redis-connection')();
 var users = [];
 
+var remove = function(array, item) {
+  array.splice(array.indexOf(item), 1);
+};
+
 app.get('/', function(req, res) {
   /*
   var messages = redisClient.lrange('messages', 0, 99, function(err, reply) {
@@ -27,8 +31,8 @@ app.get('/', function(req, res) {
       });
     } else {
     */
-      res.sendFile(__dirname + '/view/index.html');
-    //}
+  res.sendFile(__dirname + '/view/index.html');
+  //}
   //})
 });
 
@@ -167,6 +171,7 @@ io.on('connection', function(socket) {
       username: socket.username,
       color: socket.color,
     });
+    remove(users, socket.username);
     console.log('Passenger Pigeon >> user disconnected');
   });
 });
