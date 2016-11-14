@@ -9,12 +9,20 @@
  *
  */
 
+jQuery.expr.filters.offscreen = function(el) {
+  var rect = el.getBoundingClientRect();
+  return (
+    (rect.x + rect.width) < 0 ||
+    (rect.y + rect.height) < 0 ||
+    (rect.x > window.innerWidth || rect.y > window.innerHeight)
+  );
+};
+
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   if (window.navigator.standalone === false) {
     alert("For best user experience please add to Home Screen as a mobile app.");
   }
 }
-var users = [];
 var socket = io();
 var muted = false;
 var password;
@@ -143,6 +151,7 @@ function send(message, color) {
   if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
     $("form").css("position", "static");
     $("label").css("position", "static");
+    $("#online").css("position", "fixed");
     autoscroll();
   }
 }
@@ -156,11 +165,12 @@ socket.on('repeat username', function(usr) {
 
 socket.on('user add', function(usr) {
   muted = false;
+  $("#online").text("Online now: " + usr.online.toString().replace(/,/g, ", "));
+  if($('#online').is(':offscreen')){
+    alert("problems!!!");
+  }
   send(usr.username + " has joined.", usr.color);
-  users.push(usr.username);
 });
-
-
 
 socket.on('mute', function(mute) {
   if (username === mute.target) {
@@ -264,6 +274,7 @@ socket.on('not typing', function(usr) {
 
 socket.on('user left', function(usr) {
   send(usr.username + " has disconnected.", usr.color);
+  $("#online").text("Online now: " + usr.online.toString().replace(/,/g, ", "));
 })
 
 socket.on('pm', function(pm) {
@@ -288,6 +299,7 @@ socket.on('image', function(info) {
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
       $("label").css("position", "static");
+      $("#online").css("position", "fixed");
       autoscroll();
     }
   }
@@ -299,6 +311,7 @@ socket.on('video', function(info) {
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
       $("label").css("position", "static");
+      $("#online").css("position", "fixed");
       autoscroll();
     }
   }

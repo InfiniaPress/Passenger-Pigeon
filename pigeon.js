@@ -150,11 +150,12 @@ io.on('connection', function(socket) {
     if (users[socket.room].indexOf(usr) > -1) {
       socket.emit('repeat username');
     } else {
+      users[socket.room].push(usr);
       io.to(socket.room).emit('user add', {
         username: usr,
-        color: color
+        color: color,
+        online: users[socket.room]
       });
-      users[socket.room].push(usr);
     }
   });
 });
@@ -171,6 +172,7 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('user left', {
       username: socket.username,
       color: socket.color,
+      online: users[socket.room]
     });
     remove(users[socket.room], socket.username);
     console.log('Passenger Pigeon >> user disconnected');

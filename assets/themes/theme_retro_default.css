@@ -49,6 +49,7 @@ form button {
   margin: 0;
   padding: 0;
   background: black;
+  position: static;
 }
 
 #messages li {
@@ -101,4 +102,12 @@ form button {
 #file:focus+ label {
   outline: 1px dotted #000;
   outline: -webkit-focus-ring-color auto 5px;
+}
+
+#online {
+  background-color: black;
+  color: #00ff00;
+  top: 0px;
+  width: 80%;
+  left: 0px;
 }
