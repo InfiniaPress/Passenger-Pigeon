@@ -10,7 +10,7 @@ var eventEmitter = new events.EventEmitter();
 var config = require('./config.json');
 // Command line arguments 
 var cmd = process.argv[2];
-var redisClient = require('redis-connection')();
+//var redisClient = require('redis-connection')();
 var users = [];
 
 app.get('/', function(req, res) {
