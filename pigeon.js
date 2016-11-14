@@ -36,8 +36,8 @@ app.use(express.static(__dirname + '/assets'));
 
 io.on('connection', function(socket) {
   socket.on('chat message', function(msg) {
-    redisClient.lpush('messages', JSON.stringify(msg));
-    redisClient.ltrim('messages', 0, 99);
+    //redisClient.lpush('messages', JSON.stringify(msg));
+    //redisClient.ltrim('messages', 0, 99);
     io.to(socket.room).emit('chat message', msg, {
       username: socket.username,
       color: socket.color
