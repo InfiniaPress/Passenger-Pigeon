@@ -146,14 +146,15 @@ io.on('connection', function(socket) {
     socket.color = color;
     socket.room = room;
     socket.join(socket.room);
-    if (users.indexOf(usr) > -1) {
+    users[socket.room] = Object.prototype.toString.call(users[socket.room]) == "[object Array]" ? users[socket.room] : [];
+    if (users[socket.room].indexOf(usr) > -1) {
       socket.emit('repeat username');
     } else {
       io.to(socket.room).emit('user add', {
         username: usr,
         color: color
       });
-      users.push(usr);
+      users[socket.room].push(usr);
     }
   });
 });
@@ -171,7 +172,7 @@ io.on('connection', function(socket) {
       username: socket.username,
       color: socket.color,
     });
-    remove(users, socket.username);
+    remove(users[socket.room], socket.username);
     console.log('Passenger Pigeon >> user disconnected');
   });
 });
