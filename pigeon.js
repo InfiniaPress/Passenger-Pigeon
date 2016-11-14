@@ -14,6 +14,7 @@ var cmd = process.argv[2];
 var users = [];
 
 app.get('/', function(req, res) {
+  /*
   var messages = redisClient.lrange('messages', 0, 99, function(err, reply) {
     if (!err) {
       var result = [];
@@ -25,9 +26,10 @@ app.get('/', function(req, res) {
         messages: result
       });
     } else {
+    */
       res.sendFile(__dirname + '/view/index.html');
-    }
-  })
+    //}
+  //})
 });
 
 app.use(express.static(__dirname + '/assets'));
