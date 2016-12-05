@@ -295,7 +295,7 @@ socket.on('pm', function(pm) {
 
 socket.on('image', function(info) {
   if (info.image) {
-    $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent an image:</p><img src=' + info.buffer + '>' + "<br><a href = '" + info.buffer + "' download='image." + info.ext + "'>Download</a>" + '</li>');
+    $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent an image:</p><img src=' + info.buffer + '>' + "<br><a href = '" + info.buffer + "' download='image." + info.ext + "'><button class='download'>Download</button></a>" + '</li>');
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
       $("label").css("position", "static");
@@ -307,7 +307,7 @@ socket.on('image', function(info) {
 
 socket.on('video', function(info) {
   if (info.video) {
-    $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent a video:</p><video controls><source type="video/' + info.ext + '"' + 'src=' + info.buffer + '></video>' + "<br><a href = '" + info.buffer + "' download='video." + info.ext + "'>Download</a>" + '</li>');
+    $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent a video:</p><video controls><source type="video/' + info.ext + '"' + 'src=' + info.buffer + '></video>' + "<br><a href = '" + info.buffer + "' download='video." + info.ext + "'><button class='download'>Download</button></a>" + '</li>');
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
       $("label").css("position", "static");
@@ -319,7 +319,7 @@ socket.on('video', function(info) {
 
 socket.on('document', function(info) {
   if (info.document) {
-    $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent a document:</p><a href = ' + info.buffer + " download='document." + info.ext + "'>Download</a>" + '</li>');
+    $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent a document:</p><a href = ' + info.buffer + " download='document." + info.ext + "'><button class='download'>Download</button></a>" + '</li>');
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
       $("label").css("position", "static");

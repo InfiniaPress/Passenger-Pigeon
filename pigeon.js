@@ -21,7 +21,8 @@ var eventEmitter = new events.EventEmitter();
 var config = require('./config.json');
 // Command line arguments 
 var cmd = process.argv[2];
-//var redisClient = require('redis-connection')();
+var redis = require('redis');
+var redisClient = redis.createClient();
 var users = [];
 
 var remove = function(array, item) {

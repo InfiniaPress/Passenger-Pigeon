@@ -73,6 +73,15 @@ form button {
   color:red;
 }
 
+.download {
+  color:green;
+  transition-duration: 0.5s;
+}
+
+.download:hover {
+  color:red;
+}
+
 #file {
   width: 0.1px;
   height: 0.1px;

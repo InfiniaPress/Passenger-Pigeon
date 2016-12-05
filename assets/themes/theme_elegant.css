@@ -103,4 +103,23 @@ form {
   left: 0px;
 }
 
+.download{
+	color: black;
+	background-color: #eee;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	padding: 10px 30px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px solid rgba(0,0,0,0.3);
+  transition-duration: 0.5s;
+}
+
+.download:hover{
+  background-color:#00ff00 ;
+  transition-duration: 0.5s;
+  box-shadow: 0 15px 19px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 /*# sourceMappingURL=theme_elegant.css.map */
