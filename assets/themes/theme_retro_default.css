@@ -11,6 +11,11 @@ html {
 
 body {
   font: 13px Courier;
+  /*text-shadow:
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;*/
 }
 
 form {

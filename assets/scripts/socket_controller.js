@@ -39,28 +39,13 @@ var elegantColor;
 //}
 //});
 var defaultColours = [
-  "#003EFF",
-  "#00CED1",
-  "#00FFCC",
-  "#0276FD",
-  "#05EDFF",
-  "#0EBFE9",
-  "#1DA237",
-  "#0AC92B",
-  "#24D330",
-  "#2FAA96",
-  "#488214",
-  "#49E9BD",
-  "#5B59BA",
-  "#62B1F6",
-  "#72587F",
-  "#76EE00",
-  "#7F00FF",
-  "#7FFFD4",
-  "#82CFFD",
-  "#820BBB",
-  "#CD0000",
-  "#CDCD00"
+  "#ffff00",
+  "#ff0000",
+  "#00ff00",
+  "#0000ff",
+  "#ff00ff",
+  "#ffffff",
+  "#00ffff",
 ];
 
 var elegantColors = [
@@ -80,9 +65,25 @@ var elegantColors = [
 
 var typing = false;
 
-defaultColor = defaultColours[Math.floor(Math.random() * defaultColours.length)];
+function randColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
-elegantColor = elegantColors[Math.floor(Math.random() * elegantColors.length)];
+//if(navigator.userAgent.toLowerCase().indexOf("opera mini") > -1){
+  defaultColor = defaultColours[Math.floor(Math.random() * defaultColours.length)];
+
+  elegantColor = elegantColors[Math.floor(Math.random() * elegantColors.length)];
+//}else{
+//  defaultColor = randColor();
+//  elegantColor = randColor();
+//}
+
+
 
 var currentTheme = "default";
 document.getElementById('elegant').disabled = true;

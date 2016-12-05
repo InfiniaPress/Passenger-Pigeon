@@ -8,7 +8,13 @@ html {
   transition-duration: 0.5s; }
 
 body {
-  font: 18px "Gill Sans", "Gill Sans MT", Calibri, sans-serif; }
+  font: 18px "Gill Sans", "Gill Sans MT", Calibri, sans-serif; 
+	/*text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;*/
+}
 
 form {
   background: white;
