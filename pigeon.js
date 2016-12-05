@@ -22,7 +22,7 @@ var config = require('./config.json');
 // Command line arguments 
 var cmd = process.argv[2];
 var redis = require('redis');
-var redisClient = redis.createClient();
+//var redisClient = redis.createClient();
 var users = [];
 
 var remove = function(array, item) {
