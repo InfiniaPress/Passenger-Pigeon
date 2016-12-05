@@ -1,3 +1,14 @@
+/**
+ * Infinia Press (TM) (R) (C)
+ * ------------------------------
+ * Passenger Pigeon
+ * ------------------------------
+ * Socket Controller
+ * v1.2.0
+ * Created and modified by Hundotte and xiurobert
+ *
+ */
+
 var express = require('express'); // Get the module
 var app = express(); // Create express by calling the prototype in var express
 var http = require('http').Server(app);
@@ -70,6 +81,14 @@ io.on('connection', function(socket) {
         sender: socket.username,
         color: socket.color
       });
+    } else {
+      io.to(socket.room).emit('document', {
+        document: true,
+        buffer: url,
+        ext: ext,
+        sender: socket.username,
+        color: socket.color
+      })
     }
   });
   socket.on('not typing', function() {
