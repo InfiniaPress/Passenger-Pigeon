@@ -25,7 +25,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 }
 var socket = io();
 var muted = false;
-var password;
+var password = 0;
 var username = prompt("What's your name?");
 username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var roomId = prompt("Please enter your chat room's ID, or create a new one.").replace(/</g, "&lt;").replace(/>/g, "&gt;");
