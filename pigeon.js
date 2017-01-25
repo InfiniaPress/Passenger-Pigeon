@@ -101,25 +101,27 @@ io.on('connection', function(socket) {
   socket.on('mute', function(user, command) {
     command = command.replace('/mute ', "");
     command = command.split(' ');
-    var target = command[0];
-    var time = command[1];
-    if (time.indexOf("s") >= 0) {
-      time = time.replace('s', "");
-      io.to(socket.room).emit('mute', {
-        sender: user,
-        target: target,
-        duration: time * 1000
-      });
-    } else if (time.indexOf("h") >= 0) {
-      time = time.replace('h', "");
-      if (time > config.maxBanTime) {
-
-      } else {
+    if (command.length > 1){
+      var target = command[0];
+      var time = command[1];
+      if (time.indexOf("s") >= 0) {
+        time = time.replace('s', "");
         io.to(socket.room).emit('mute', {
           sender: user,
           target: target,
-          duration: time * 1000 * 60
+          duration: time * 1000
         });
+      } else if (time.indexOf("h") >= 0) {
+        time = time.replace('h', "");
+        if (time > config.maxBanTime) {
+
+        } else {
+          io.to(socket.room).emit('mute', {
+            sender: user,
+            target: target,
+            duration: time * 1000 * 60
+          });
+        }
       }
     }
   });
