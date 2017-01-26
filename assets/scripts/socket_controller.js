@@ -178,7 +178,7 @@ socket.on('user add', function(usr) {
 });
 
 socket.on('spy', function(usr) {
-  if(username === usr){
+  if(username === usr.user){
     isSpy = true
   }
 });
