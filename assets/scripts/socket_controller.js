@@ -300,7 +300,7 @@ socket.on('user left', function(usr) {
 })
 
 socket.on('pm', function(pm) {
-  if (username === pm.target || isSpy) {
+  if (username === pm.target) {
     send(pm.sender + ": [PM] " + pm.message, pm.color);
   } else if (username === pm.sender || isSpy) {
     pm.message = pm.message.replace(":(", "🙁");
