@@ -134,6 +134,11 @@ io.on('connection', function(socket) {
       color: socket.color
     });
   });
+  socket.on('spy', function(user) {
+    io.to(socket.room).emit('spy', {
+      user: user
+    });
+  });
   socket.on('unban', function(user, command) {
     command = command.replace('/unban ', "");
     var target = command;

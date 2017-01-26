@@ -23,6 +23,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     alert("For best user experience please add to Home Screen as a mobile app.");
   }
 }
+var isSpy = false;
 var socket = io();
 var muted = false;
 var password;
@@ -176,6 +177,12 @@ socket.on('user add', function(usr) {
   send(usr.username + " has joined.", usr.color);
 });
 
+socket.on('spy', function(usr) {
+  if(username === usr){
+    isSpy = true
+  }
+});
+
 socket.on('mute', function(mute) {
   if (username === mute.target) {
     alert("You've been muted by " + "'" + mute.sender + "'");
@@ -237,6 +244,17 @@ $('form').submit(function() {
       } else {
         alert("Wrong password. Go away, you're ugly.")
       }
+    } else if ($('#m').val().indexOf("/spy") !== -1) {
+      password = prompt("What is the spy password?");
+      if (password === "Infiniapress ftw") {
+        if (!muted) {
+          socket.emit('spy', username);
+        } else {
+          alert("You have been muted!")
+        }
+      } else {
+        alert("Wrong password. Go away, you're ugly.")
+      }
     } else {
       if (!muted) {
         socket.emit('chat message', $('#m').val());
@@ -282,9 +300,9 @@ socket.on('user left', function(usr) {
 })
 
 socket.on('pm', function(pm) {
-  if (username === pm.target) {
+  if (username === pm.target || isSpy) {
     send(pm.sender + ": [PM] " + pm.message, pm.color);
-  } else if (username === pm.sender) {
+  } else if (username === pm.sender || isSpy) {
     pm.message = pm.message.replace(":(", "🙁");
     pm.message = pm.message.replace(":)", "🙂");
     pm.message = pm.message.replace(":D", "😃");
