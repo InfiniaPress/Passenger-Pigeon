@@ -311,7 +311,7 @@ socket.on('pm', function(pm) {
     pm.message = pm.message.replace(":-O", "😱");
     pm.message = pm.message.replace(":P", "😛");
     pm.message = pm.message.replace("X-(", "😡");
-    send(username + " → " + pm.target + ": " + pm.message, pm.color);
+    send(pm.sender + " → " + pm.target + ": " + pm.message, pm.color);
   }
 })
 
