@@ -36,6 +36,9 @@ while(username.length >= 30){
 }
 username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var roomId = prompt("Please enter your chat room's ID, or create a new one.").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+while(!roomId){
+  roomId = prompt("Enter a room name!").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
 var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
 var defaultColor;
 var elegantColor;
