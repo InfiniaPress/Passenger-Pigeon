@@ -39,7 +39,7 @@ var roomId = prompt("Please enter your chat room's ID, or create a new one.").re
 while(!roomId){
   roomId = prompt("Enter a room name!").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
-while(username.length >= 40){
+while(roomId.length >= 40){
   roomId = prompt("Enter a shorter room ID!").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');
@@ -218,7 +218,10 @@ socket.on('unban', function(unban) {
 });
 
 $('form').submit(function() {
-  if (/\S/.test($("#m").val())) {
+  if ($("#m").val() > 1000){
+    alert("Your message is too long!")
+  }
+  else{if (/\S/.test($("#m").val())) {
     if ($('#m').val().indexOf("/mute") !== -1) {
       password = prompt("What is the mute password?");
       if (password === "keane and robert") {
@@ -275,6 +278,7 @@ $('form').submit(function() {
   }
   $('#m').val('');
   return false;
+      }
 });
 
 function timeoutFunction() {
