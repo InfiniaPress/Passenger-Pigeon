@@ -31,6 +31,9 @@ var username = prompt("What's your name?");
 while(!username){
   username = prompt("Enter a proper name.")
 }
+while(username.length >= 30){
+  username = prompt("Your name is too long!")
+}
 username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var roomId = prompt("Please enter your chat room's ID, or create a new one.").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var notification = new Audio('https://cdn.rawgit.com/InfiniaPress/Passenger-Pigeon/master/assets/notification.mp3');

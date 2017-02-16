@@ -49,6 +49,7 @@ app.get('/', function(req, res) {
 });
 
 app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/bower_components'));
 
 io.on('connection', function(socket) {
   socket.on('chat message', function(msg) {
