@@ -67,7 +67,7 @@ io.on('connection', function(socket) {
     });
   });
   socket.on('file', function(url, ext) {
-    if (["jpg", "png", "gif"].indexOf(ext) > -1) {
+    if (["jpg", "png", "gif", "psd", "tiff"].indexOf(ext) > -1) {
       io.to(socket.room).emit('image', {
         image: true,
         buffer: url,
