@@ -156,6 +156,8 @@ $("#themeChange").on("click", function() {
         case "#00ffff":
           items[i].style.color = "#a8f07a"
           break;
+        default:
+          items[i].style.color = "000000"
       }
     }
     socket.emit('changetheme', username, elegantColor);
