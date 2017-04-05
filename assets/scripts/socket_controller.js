@@ -95,25 +95,25 @@ function randColor() {
   elegantColor = elegantColors[Math.floor(Math.random() * elegantColors.length)];
   switch(defaultColor){
     case "#ffff00":
-      elegantColor == "#e21400"
+      elegantColor = "#e21400"
       break;
     case "#ff0000":
-      elegantColor == "#91580f"
+      elegantColor = "#91580f"
       break;
     case "#00ff00":
-      elegantColor == "#f8a700"
+      elegantColor = "#f8a700"
       break;
     case "#91ffb1":
-      elegantColor == "#f78b00"
+      elegantColor = "#f78b00"
       break;  
     case "#ff00ff":
-      elegantColor == "#58dc00"
+      elegantColor = "#58dc00"
       break;
     case "#ffffff":
-      elegantColor == "#287b00"
+      elegantColor = "#287b00"
       break;
     case "#00ffff":
-      elegantColor == "#a8f07a"
+      elegantColor = "#a8f07a"
       break;
   }
 //}else{
@@ -136,25 +136,25 @@ $("#themeChange").on("click", function() {
     for (var i = 0; i < items.length; ++i) {
       switch(items[i].style.color){
         case "#ffff00":
-          items[i].style.color == "#e21400"
+          items[i].style.color = "#e21400"
           break;
         case "#ff0000":
-          items[i].style.color == "#91580f"
+          items[i].style.color = "#91580f"
           break;
         case "#00ff00":
-          items[i].style.color == "#f8a700"
+          items[i].style.color = "#f8a700"
           break;
         case "#91ffb1":
-          items[i].style.color == "#f78b00"
+          items[i].style.color = "#f78b00"
           break;  
         case "#ff00ff":
-          items[i].style.color == "#58dc00"
+          items[i].style.color = "#58dc00"
           break;
         case "#ffffff":
-          items[i].style.color == "#287b00"
+          items[i].style.color = "#287b00"
           break;
         case "#00ffff":
-          items[i].style.color == "#a8f07a"
+          items[i].style.color = "#a8f07a"
           break;
       }
     }
@@ -168,25 +168,25 @@ $("#themeChange").on("click", function() {
     for (var i = 0; i < items.length; ++i) {
       switch(items[i].style.color){
         case "#e21400":
-          items[i].style.color == "#ffff00"
+          items[i].style.color = "#ffff00"
           break;
         case "#91580f":
-          items[i].style.color == "#ff0000"
+          items[i].style.color = "#ff0000"
           break;
         case "#f8a700":
-          items[i].style.color == "#00ff00"
+          items[i].style.color = "#00ff00"
           break;
         case "#f78b00":
-          items[i].style.color == "#91ffb1"
+          items[i].style.color = "#91ffb1"
           break;  
         case "#58dc00":
-          items[i].style.color == "#ff00ff"
+          items[i].style.color = "#ff00ff"
           break;
         case "#287b00":
-          items[i].style.color == "#ffffff"
+          items[i].style.color = "#ffffff"
           break;
         case "#a8f07a":
-          items[i].style.color == "#00ffff"
+          items[i].style.color = "#00ffff"
           break;
       }
     }
