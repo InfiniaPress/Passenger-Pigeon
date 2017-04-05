@@ -100,7 +100,6 @@ function randColor() {
 //if(navigator.userAgent.toLowerCase().indexOf("opera mini") > -1){
   defaultColor = defaultColours[Math.floor(Math.random() * defaultColours.length)];
 
-  elegantColor = elegantColors[Math.floor(Math.random() * elegantColors.length)];
   switch(rgb2hex(defaultColor)){
     case "#ffff00":
       elegantColor = "#e21400"
@@ -164,10 +163,7 @@ $("#themeChange").on("click", function() {
         case "#00ffff":
           items[i].style.color = "#a8f07a"
           break;
-        default:
-          items[i].style.color = "000000"
       }
-    alert(items[i].style.color)
     }
     socket.emit('changetheme', username, elegantColor);
   } else if (currentTheme == "elegant") {
