@@ -55,7 +55,7 @@ var defaultColours = [
   "#ffff00",
   "#ff0000",
   "#00ff00",
-  "eeeeee",
+  "#91ffb1",
   "#ff00ff",
   "#ffffff",
   "#00ffff",
