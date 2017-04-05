@@ -159,6 +159,7 @@ $("#themeChange").on("click", function() {
         default:
           items[i].style.color = "000000"
       }
+      alert(items[i].style.color)
     }
     socket.emit('changetheme', username, elegantColor);
   } else if (currentTheme == "elegant") {
