@@ -80,6 +80,14 @@ var elegantColors = [
 
 var typing = false;
 
+function rgb2hex(rgb){
+ rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+ return (rgb && rgb.length === 4) ? "#" +
+  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+}
+
 function randColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -93,7 +101,7 @@ function randColor() {
   defaultColor = defaultColours[Math.floor(Math.random() * defaultColours.length)];
 
   elegantColor = elegantColors[Math.floor(Math.random() * elegantColors.length)];
-  switch(defaultColor){
+  switch(rgb2hex(defaultColor)){
     case "#ffff00":
       elegantColor = "#e21400"
       break;
@@ -134,7 +142,7 @@ $("#themeChange").on("click", function() {
     ul = document.getElementById("messages");
     items = ul.getElementsByTagName("li");
     for (var i = 0; i < items.length; ++i) {
-      switch(items[i].style.color){
+      switch(rgb2hex(items[i].style.color)){
         case "#ffff00":
           items[i].style.color = "#e21400"
           break;
@@ -159,7 +167,7 @@ $("#themeChange").on("click", function() {
         default:
           items[i].style.color = "000000"
       }
-      alert(items[i].style.color)
+    alert(items[i].style.color)
     }
     socket.emit('changetheme', username, elegantColor);
   } else if (currentTheme == "elegant") {
@@ -169,7 +177,7 @@ $("#themeChange").on("click", function() {
     ul = document.getElementById("messages");
     items = ul.getElementsByTagName("li");
     for (var i = 0; i < items.length; ++i) {
-      switch(items[i].style.color){
+      switch(rgb2hex(items[i].style.color)){
         case "#e21400":
           items[i].style.color = "#ffff00"
           break;
