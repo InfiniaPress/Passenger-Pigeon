@@ -27,6 +27,8 @@ var isSpy = false;
 var socket = io();
 var muted = false;
 var password;
+var items;
+var ul;
 var username = prompt("What's your name?");
 while(!username){
   username = prompt("Enter a proper name.")
@@ -69,11 +71,11 @@ var elegantColors = [
   '#58dc00',
   '#287b00',
   '#a8f07a',
-  '#4ae8c4',
-  '#3b88eb',
-  '#3824aa',
-  '#a700ff',
-  '#d300e7'
+  //'#4ae8c4',
+  //'#3b88eb',
+  //'#3824aa',
+  //'#a700ff',
+  //'#d300e7'
 ];
 
 var typing = false;
@@ -91,6 +93,29 @@ function randColor() {
   defaultColor = defaultColours[Math.floor(Math.random() * defaultColours.length)];
 
   elegantColor = elegantColors[Math.floor(Math.random() * elegantColors.length)];
+  switch(defaultColor){
+    case "#ffff00":
+      elegantColor == "#e21400"
+      break;
+    case "#ff0000":
+      elegantColor == "#91580f"
+      break;
+    case "#00ff00":
+      elegantColor == "#f8a700"
+      break;
+    case "#91ffb1":
+      elegantColor == "#f78b00"
+      break;  
+    case "#ff00ff":
+      elegantColor == "#58dc00"
+      break;
+    case "#ffffff":
+      elegantColor == "#287b00"
+      break;
+    case "#00ffff":
+      elegantColor == "#a8f07a"
+      break;
+  }
 //}else{
 //  defaultColor = randColor();
 //  elegantColor = randColor();
@@ -106,12 +131,66 @@ $("#themeChange").on("click", function() {
     document.getElementById('elegant').disabled = false;
     document.getElementById('default').disabled = true;
     currentTheme = "elegant";
+    ul = document.getElementById("foo");
+    items = ul.getElementsByTagName("li");
+    for (var i = 0; i < items.length; ++i) {
+      switch(items[i].style.color){
+        case "#ffff00":
+          items[i].style.color == "#e21400"
+          break;
+        case "#ff0000":
+          items[i].style.color == "#91580f"
+          break;
+        case "#00ff00":
+          items[i].style.color == "#f8a700"
+          break;
+        case "#91ffb1":
+          items[i].style.color == "#f78b00"
+          break;  
+        case "#ff00ff":
+          items[i].style.color == "#58dc00"
+          break;
+        case "#ffffff":
+          items[i].style.color == "#287b00"
+          break;
+        case "#00ffff":
+          items[i].style.color == "#a8f07a"
+          break;
+      }
+    }
     socket.emit('changetheme', username, elegantColor);
   } else if (currentTheme == "elegant") {
     document.getElementById('elegant').disabled = true;
     document.getElementById('default').disabled = false;
     currentTheme = "default";
-    colours = ["#003EFF",
+    ul = document.getElementById("foo");
+    items = ul.getElementsByTagName("li");
+    for (var i = 0; i < items.length; ++i) {
+      switch(items[i].style.color){
+        case "#e21400":
+          items[i].style.color == "#ffff00"
+          break;
+        case "#91580f":
+          items[i].style.color == "#ff0000"
+          break;
+        case "#f8a700":
+          items[i].style.color == "#00ff00"
+          break;
+        case "#f78b00":
+          items[i].style.color == "#91ffb1"
+          break;  
+        case "#58dc00":
+          items[i].style.color == "#ff00ff"
+          break;
+        case "#287b00":
+          items[i].style.color == "#ffffff"
+          break;
+        case "#a8f07a":
+          items[i].style.color == "#00ffff"
+          break;
+      }
+    }
+   /* colours = ["#003EFF",
       "#00CED1",
       "#00FFCC",
       "#0276FD",
@@ -133,7 +212,7 @@ $("#themeChange").on("click", function() {
       "#820BBB",
       "#CD0000",
       "#CDCD00"
-    ];
+    ];*/
     socket.emit('changetheme', username, defaultColor);
   }
 })
