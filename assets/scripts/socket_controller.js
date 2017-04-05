@@ -131,7 +131,7 @@ $("#themeChange").on("click", function() {
     document.getElementById('elegant').disabled = false;
     document.getElementById('default').disabled = true;
     currentTheme = "elegant";
-    ul = document.getElementById("foo");
+    ul = document.getElementById("messages");
     items = ul.getElementsByTagName("li");
     for (var i = 0; i < items.length; ++i) {
       switch(items[i].style.color){
@@ -163,7 +163,7 @@ $("#themeChange").on("click", function() {
     document.getElementById('elegant').disabled = true;
     document.getElementById('default').disabled = false;
     currentTheme = "default";
-    ul = document.getElementById("foo");
+    ul = document.getElementById("messages");
     items = ul.getElementsByTagName("li");
     for (var i = 0; i < items.length; ++i) {
       switch(items[i].style.color){
