@@ -99,8 +99,6 @@ function randColor() {
 
 //if(navigator.userAgent.toLowerCase().indexOf("opera mini") > -1){
   defaultColor = defaultColours[Math.floor(Math.random() * defaultColours.length)];
-alert(defaultColor)
-alert(rgb2hex(defaultColor))
 
   switch(defaultColor){
     case "#ffff00":
@@ -125,7 +123,6 @@ alert(rgb2hex(defaultColor))
       elegantColor = "#a8f07a"
       break;
   }
-alert(elegantColor)
 //}else{
 //  defaultColor = randColor();
 //  elegantColor = randColor();
