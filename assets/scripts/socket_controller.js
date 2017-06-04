@@ -475,5 +475,54 @@ socket.on('chat message', function(msg, usr) {
   msg = msg.replace(":-O", "😱");
   msg = msg.replace(":P", "😛");
   msg = msg.replace("X-(", "😡");
+  if(currentTheme == "elegant"){
+    switch(usr.color){
+        case "#ffff00":
+          usr.color = "#e21400"
+          break;
+        case "#ff0000":
+          usr.color = "#91580f"
+          break;
+        case "#00ff00":
+          usr.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          usr.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          usr.color = "#58dc00"
+          break;
+        case "#ffffff":
+          usr.color = "#287b00"
+          break;
+        case "#00ffff":
+          usr.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(usr.color){
+        case "#e21400":
+          usr.color = "#ffff00"
+          break;
+        case "#91580f":
+          usr.color = "#ff0000"
+          break;
+        case "#f8a700":
+          usr.color = "#00ff00"
+          break;
+        case "#f78b00":
+          usr.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          usr.color = "#ff00ff"
+          break;
+        case "#287b00":
+          usr.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          usr.color = "#00ffff"
+          break;
+      }
+  }
   send(usr.username + ": " + msg, usr.color);
 });
