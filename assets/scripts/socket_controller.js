@@ -386,7 +386,56 @@ $("form input").on("keydown", function(e) {
 });
 
 socket.on('typing', function(usr) {
-  $("#typing").text(usr.username + " is typing.");
+  $("#typing").text(usr.username + " is typing...");
+  if(currentTheme == "elegant"){
+    switch(usr.color){
+        case "#ffff00":
+          usr.color = "#e21400"
+          break;
+        case "#ff0000":
+          usr.color = "#91580f"
+          break;
+        case "#00ff00":
+          usr.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          usr.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          usr.color = "#58dc00"
+          break;
+        case "#ffffff":
+          usr.color = "#287b00"
+          break;
+        case "#00ffff":
+          usr.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(usr.color){
+        case "#e21400":
+          usr.color = "#ffff00"
+          break;
+        case "#91580f":
+          usr.color = "#ff0000"
+          break;
+        case "#f8a700":
+          usr.color = "#00ff00"
+          break;
+        case "#f78b00":
+          usr.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          usr.color = "#ff00ff"
+          break;
+        case "#287b00":
+          usr.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          usr.color = "#00ffff"
+          break;
+      }
+  }
   $("#typing").css("color", usr.color);
 })
 
@@ -395,22 +444,161 @@ socket.on('not typing', function(usr) {
 })
 
 socket.on('user left', function(usr) {
+  if(currentTheme == "elegant"){
+    switch(usr.color){
+        case "#ffff00":
+          usr.color = "#e21400"
+          break;
+        case "#ff0000":
+          usr.color = "#91580f"
+          break;
+        case "#00ff00":
+          usr.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          usr.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          usr.color = "#58dc00"
+          break;
+        case "#ffffff":
+          usr.color = "#287b00"
+          break;
+        case "#00ffff":
+          usr.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(usr.color){
+        case "#e21400":
+          usr.color = "#ffff00"
+          break;
+        case "#91580f":
+          usr.color = "#ff0000"
+          break;
+        case "#f8a700":
+          usr.color = "#00ff00"
+          break;
+        case "#f78b00":
+          usr.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          usr.color = "#ff00ff"
+          break;
+        case "#287b00":
+          usr.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          usr.color = "#00ffff"
+          break;
+      }
+  }
   send(usr.username + " has disconnected.", usr.color);
   $("#online").text("Online now: " + usr.online.toString().replace(/,/g, ", "));
 })
 
 socket.on('pm', function(pm) {
   if (username === pm.target) {
+    if(currentTheme == "elegant"){
+    switch(pm.color){
+        case "#ffff00":
+          pm.color = "#e21400"
+          break;
+        case "#ff0000":
+          pm.color = "#91580f"
+          break;
+        case "#00ff00":
+          pm.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          pm.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          pm.color = "#58dc00"
+          break;
+        case "#ffffff":
+          pm.color = "#287b00"
+          break;
+        case "#00ffff":
+          pm.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(pm.color){
+        case "#e21400":
+          pm.color = "#ffff00"
+          break;
+        case "#91580f":
+          pm.color = "#ff0000"
+          break;
+        case "#f8a700":
+          pm.color = "#00ff00"
+          break;
+        case "#f78b00":
+          pm.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          pm.color = "#ff00ff"
+          break;
+        case "#287b00":
+          pm.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          pm.color = "#00ffff"
+          break;
+      }
+  }
     send(pm.sender + ": [PM] " + pm.message, pm.color);
   } else if (username === pm.sender || isSpy) {
-    pm.message = pm.message.replace(":(", "🙁");
-    pm.message = pm.message.replace(":)", "🙂");
-    pm.message = pm.message.replace(":D", "😃");
-    pm.message = pm.message.replace(":'(", "😭");
-    pm.message = pm.message.replace(":-|", "😑");
-    pm.message = pm.message.replace(":-O", "😱");
-    pm.message = pm.message.replace(":P", "😛");
-    pm.message = pm.message.replace("X-(", "😡");
+      if(currentTheme == "elegant"){
+    switch(pm.color){
+        case "#ffff00":
+          pm.color = "#e21400"
+          break;
+        case "#ff0000":
+          pm.color = "#91580f"
+          break;
+        case "#00ff00":
+          pm.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          pm.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          pm.color = "#58dc00"
+          break;
+        case "#ffffff":
+          pm.color = "#287b00"
+          break;
+        case "#00ffff":
+          pm.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(pm.color){
+        case "#e21400":
+          pm.color = "#ffff00"
+          break;
+        case "#91580f":
+          pm.color = "#ff0000"
+          break;
+        case "#f8a700":
+          pm.color = "#00ff00"
+          break;
+        case "#f78b00":
+          pm.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          pm.color = "#ff00ff"
+          break;
+        case "#287b00":
+          pm.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          pm.color = "#00ffff"
+          break;
+      }
+  }
     send(pm.sender + " → " + pm.target + ": " + pm.message, pm.color);
   }
 })
@@ -475,6 +663,7 @@ socket.on('chat message', function(msg, usr) {
   msg = msg.replace(":-O", "😱");
   msg = msg.replace(":P", "😛");
   msg = msg.replace("X-(", "😡");
+  msg = msg.replace("XD", "😝");
   if(currentTheme == "elegant"){
     switch(usr.color){
         case "#ffff00":
