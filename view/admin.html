@@ -39,10 +39,14 @@
 			$.ajax({
 				type: "POST",
 				url: "https://admin.infinia.press/linkapp.php",
-				data: { publicKey: $("#privateKey").val() },
-				success: function(){
-					alert("linked!");
-					},
+				data: { publicKey: $("#publicKey").val() },
+				success: function(response){
+					if(response){
+						alert("linked!");
+					}else{
+						alert("failed. Wrong key.");
+					}
+				},
 				dataType: "application/json"
 			});
 		});
