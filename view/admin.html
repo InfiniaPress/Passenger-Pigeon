@@ -36,13 +36,14 @@
 	
 	<script>
 		$("#link").click(function(){
-			alert("Linked!");
 			$.ajax({
 				type: "POST",
-				url: url,
-				data: data,
-				success: success,
-				dataType: dataType
+				url: "https://admin.infinia.press/linkapp.php",
+				data: { publicKey: $("#privateKey").val() },
+				success: function(){
+					alert("linked!");
+					},
+				dataType: "application/json"
 			});
 		});
 
