@@ -43,7 +43,11 @@ app.get('/', function(req, res) {
       });
     } else {
     */
-  res.sendFile(__dirname + '/view/index.html');
+  try{
+    username = req.query.username;
+  }catch{
+  res.sendFile(__dirname + '/view/index.html');    
+  }
   //}
   //})
 });
