@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Link Passenger Pigeon</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  	<script src="http://materializecss.com/bin/materialize.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+    <script src="https://cdn.rawgit.com/peachananr/onepage-scroll/master/jquery.onepage-scroll.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.rawgit.com/peachananr/onepage-scroll/master/onepage-scroll.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    
+    <style>
+        html{
+            text-align: center;
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Link PP to Infinia Press</h1>
+    <br>
+    <div class="input-field col s12">
+        <input id="privateKey" type="text" class="validate">
+        <label for="privateKey">Private key:</label>
+    </div>
+    <div class="input-field col s12">
+        <input id="publicKey" type="text" class="validate">
+        <label for="publicKey">Public key:</label>
+    </div>
+	
+	<a class="waves-effect waves-light btn" id="link">LINK APP</a>
+	
+	<script>
+		$("#link").click(function(){
+			alert("Linked!");
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: data,
+				success: success,
+				dataType: dataType
+			});
+		});
+
+	</script>
+
+    
+
+</body>
+</html>
