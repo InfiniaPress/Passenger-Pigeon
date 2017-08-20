@@ -23,20 +23,13 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     alert("For best user experience please add to Home Screen as a mobile app.");
   }
 }
+var username = "";
 var isSpy = false;
 var socket = io();
 var muted = false;
 var password;
 var items;
 var ul;
-var username = prompt("What's your name?");
-while(!username){
-  username = prompt("Enter a proper name.")
-}
-while(username.length >= 30){
-  username = prompt("Your name is too long!")
-}
-username = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 var roomId = prompt("Please enter your chat room's ID, or create a new one.").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 while(!roomId){
   roomId = prompt("Enter a room name!").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -241,8 +234,8 @@ $("#file").change(function() {
 });
 
 
-if (username && roomId) {
-  socket.emit('connection info', username, defaultColor, roomId);
+if (roomId) {
+  socket.emit('connection info', defaultColor, roomId);
 }
 
 function send(message, color) {
@@ -270,6 +263,7 @@ socket.on('user add', function(usr) {
     alert("problems!!!");
   }
   send(usr.username + " has joined.", usr.color);
+  username = usr.username;
 });
 
 socket.on('spy', function(usr) {

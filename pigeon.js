@@ -9,6 +9,8 @@
  *
  */
 
+var signedIn = false;
+var crypto = require('crypto');
 var express = require('express'); // Get the module
 var app = express(); // Create express by calling the prototype in var express
 var http = require('http').Server(app);
@@ -24,6 +26,12 @@ var cmd = process.argv[2];
 var redis = require('redis');
 //var redisClient = redis.createClient();
 var users = [];
+var username;
+var tempUser;
+var tempName;
+var tempEmail;
+var tempSignature;
+var tempEncrypted;
 
 var remove = function(array, item) {
   array.splice(array.indexOf(item), 1);
@@ -44,13 +52,33 @@ app.get('/', function(req, res) {
     } else {
     */
   try{
-    username = req.query.username;
-  }catch{
-  res.sendFile(__dirname + '/view/index.html');    
+    tempUser = req.query.username;
+    tempName = req.query.realName;
+    tempEmail = req.query.email;
+    tempSignature = req.query.signature;
+    tempEncrypted = crypto.createHmac('sha256', config.privateKey).update(tempUser + tempName + tempEmail).digest('hex');
+    if(tempEncrypted == tempSignature){
+      username = tempUser;
+      res.sendFile(__dirname + '/view/index.html');
+    }else{
+      res.redirect(config.loginPage)
+    }
+  }catch(error){
+    res.redirect(config.loginPage)
   }
   //}
   //})
 });
+
+app.get('/admin', function(req, res){
+  res.sendFile(__dirname + '/view/admin.html')
+  io.on('connection', function(socket) {
+    socket.on('saveAdminSettings', function(key){
+      config.privateKey = key
+    });
+  });
+});
+
 
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/bower_components'));
@@ -173,18 +201,18 @@ io.on('connection', function(socket) {
       color: socket.color
     });
   });
-  socket.on('connection info', function(usr, color, room) {
-    socket.username = usr;
+  socket.on('connection info', function(color, room) {
+    socket.username = username;
     socket.color = color;
     socket.room = room;
     socket.join(socket.room);
     users[socket.room] = Object.prototype.toString.call(users[socket.room]) == "[object Array]" ? users[socket.room] : [];
-    if (users[socket.room].indexOf(usr) > -1) {
+    if (users[socket.room].indexOf(socket.username) > -1) {
       socket.emit('repeat username');
     } else {
-      users[socket.room].push(usr);
+      users[socket.room].push(socket.username);
       io.to(socket.room).emit('user add', {
-        username: usr,
+        username: socket.username,
         color: color,
         online: users[socket.room]
       });

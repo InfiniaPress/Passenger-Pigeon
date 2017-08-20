@@ -1,4 +1,6 @@
 {
   "port": 9999,
-  "maxBanTime": 9999
+  "maxBanTime": 9999,
+  "privateKey": "I am a person"
+  "loginPage": "https://infinia.press/sso/login"
 }

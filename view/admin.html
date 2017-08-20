@@ -5,6 +5,7 @@
     <title>Link Passenger Pigeon</title>
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
   	<script src="http://materializecss.com/bin/materialize.js"></script>
+	  <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
     <script src="https://cdn.rawgit.com/peachananr/onepage-scroll/master/jquery.onepage-scroll.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.rawgit.com/peachananr/onepage-scroll/master/onepage-scroll.css">
@@ -35,6 +36,7 @@
 	<a class="waves-effect waves-light btn" id="link">LINK APP</a>
 	
 	<script>
+		socket = io()
 		$("#link").click(function(){
 			$.ajax({
 				type: "POST",
@@ -49,6 +51,7 @@
 				},
 				dataType: "application/json"
 			});
+			socket.emit("saveAdminSettings", $("#privateKey").val());
 		});
 
 	</script>
