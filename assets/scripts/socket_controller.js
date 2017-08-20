@@ -604,6 +604,55 @@ socket.on('pm', function(pm) {
 
 socket.on('image', function(info) {
   if (info.image) {
+          if(currentTheme == "elegant"){
+    switch(info.color){
+        case "#ffff00":
+          info.color = "#e21400"
+          break;
+        case "#ff0000":
+          info.color = "#91580f"
+          break;
+        case "#00ff00":
+          info.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          info.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          info.color = "#58dc00"
+          break;
+        case "#ffffff":
+          info.color = "#287b00"
+          break;
+        case "#00ffff":
+          info.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(info.color){
+        case "#e21400":
+          info.color = "#ffff00"
+          break;
+        case "#91580f":
+          info.color = "#ff0000"
+          break;
+        case "#f8a700":
+          info.color = "#00ff00"
+          break;
+        case "#f78b00":
+          info.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          info.color = "#ff00ff"
+          break;
+        case "#287b00":
+          info.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          info.color = "#00ffff"
+          break;
+      }
+  }
     $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent an image:</p><img src=' + info.buffer + '>' + "<br><a href = '" + info.buffer + "' download='image." + info.ext + "'><button class='download'>Download</button></a>" + '</li>');
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
@@ -616,6 +665,55 @@ socket.on('image', function(info) {
 
 socket.on('video', function(info) {
   if (info.video) {
+              if(currentTheme == "elegant"){
+    switch(info.color){
+        case "#ffff00":
+          info.color = "#e21400"
+          break;
+        case "#ff0000":
+          info.color = "#91580f"
+          break;
+        case "#00ff00":
+          info.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          info.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          info.color = "#58dc00"
+          break;
+        case "#ffffff":
+          info.color = "#287b00"
+          break;
+        case "#00ffff":
+          info.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(info.color){
+        case "#e21400":
+          info.color = "#ffff00"
+          break;
+        case "#91580f":
+          info.color = "#ff0000"
+          break;
+        case "#f8a700":
+          info.color = "#00ff00"
+          break;
+        case "#f78b00":
+          info.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          info.color = "#ff00ff"
+          break;
+        case "#287b00":
+          info.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          info.color = "#00ffff"
+          break;
+      }
+  }
     $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent a video:</p><video controls><source type="video/' + info.ext + '"' + 'src=' + info.buffer + '></video>' + "<br><a href = '" + info.buffer + "' download='video." + info.ext + "'><button class='download'>Download</button></a>" + '</li>');
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
@@ -628,6 +726,55 @@ socket.on('video', function(info) {
 
 socket.on('document', function(info) {
   if (info.document) {
+              if(currentTheme == "elegant"){
+    switch(info.color){
+        case "#ffff00":
+          info.color = "#e21400"
+          break;
+        case "#ff0000":
+          info.color = "#91580f"
+          break;
+        case "#00ff00":
+          info.color = "#f8a700"
+          break;
+        case "#91ffb1":
+          info.color = "#f78b00"
+          break;  
+        case "#ff00ff":
+          info.color = "#58dc00"
+          break;
+        case "#ffffff":
+          info.color = "#287b00"
+          break;
+        case "#00ffff":
+          info.color = "#a8f07a"
+          break;
+      }
+  }else{
+    switch(info.color){
+        case "#e21400":
+          info.color = "#ffff00"
+          break;
+        case "#91580f":
+          info.color = "#ff0000"
+          break;
+        case "#f8a700":
+          info.color = "#00ff00"
+          break;
+        case "#f78b00":
+          info.color = "#91ffb1"
+          break;  
+        case "#58dc00":
+          info.color = "#ff00ff"
+          break;
+        case "#287b00":
+          info.color = "#ffffff"
+          break;
+        case "#a8f07a":
+          info.color = "#00ffff"
+          break;
+      }
+  }
     $('#messages').append('<li><p style="color: ' + info.color + '">' + info.sender + ' sent a document:</p><a href = ' + info.buffer + " download='document." + info.ext + "'><button class='download'>Download</button></a>" + '</li>');
     if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
       $("form").css("position", "static");
