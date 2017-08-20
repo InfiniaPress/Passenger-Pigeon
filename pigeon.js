@@ -211,7 +211,12 @@ io.on('connection', function(socket) {
       socket.emit('repeat username');
     } else {
       users[socket.room].push(socket.username);
-      io.to(socket.room).emit('user add', {
+      socket.broadcast.to(socket.room).emit('user add', {
+        username: socket.username,
+        color: color,
+        online: users[socket.room]
+      });
+      socket.emit('create self', {
         username: socket.username,
         color: color,
         online: users[socket.room]
@@ -229,12 +234,17 @@ io.on('connection', function(socket) {
   //  });
   console.log('Passenger Pigeon >> a user connected');
   socket.on('disconnect', function() {
-    socket.broadcast.emit('user left', {
+    try{
+      remove(users[socket.room], socket.username);
+    }catch(err){
+      console.log(err);
+      console.log(users[socket.room] + " is the user list and " + socket.username + " is the username. The room is " + socket.room)
+    }
+    socket.broadcast.to(socket.room).emit('user left', {
       username: socket.username,
       color: socket.color,
       online: users[socket.room]
     });
-    remove(users[socket.room], socket.username);
     console.log('Passenger Pigeon >> user disconnected');
   });
 });

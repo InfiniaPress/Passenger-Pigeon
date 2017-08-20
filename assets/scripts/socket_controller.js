@@ -263,7 +263,12 @@ socket.on('user add', function(usr) {
     alert("problems!!!");
   }
   send(usr.username + " has joined.", usr.color);
+});
+
+socket.on('create self', function(usr){
+  $("#online").text("Online now: " + usr.online.toString().replace(/,/g, ", "));  
   username = usr.username;
+  send("You joined!", usr.color);
 });
 
 socket.on('spy', function(usr) {
