@@ -239,7 +239,6 @@ if (roomId) {
 }
 
 function send(message, color) {
-  message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   $('#messages').append('<li' + ' style="color:' + color + '">' + message + '</li>');
   if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight + 65) {
     $("form").css("position", "static");
@@ -801,6 +800,7 @@ socket.on('chat message', function(msg, usr) {
       notification.play();
     }
   }
+  msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   msg = msg.replace(":(", "🙁");
   msg = msg.replace(":)", "🙂");
   msg = msg.replace(":D", "😃");
@@ -810,6 +810,12 @@ socket.on('chat message', function(msg, usr) {
   msg = msg.replace(":P", "😛");
   msg = msg.replace("X-(", "😡");
   msg = msg.replace("XD", "😝");
+  try{
+  msg = msg.replace(msg.match(/\*+(\w*)\*+/)[0],"<b>"+msg.match(/\*+(\w*)\*+/)[1]+"</b>");
+  }catch(err){}
+  try{
+  msg = msg.replace(msg.match(/\_+(\w*)\_+/)[0],"<i>"+msg.match(/\_+(\w*)\_+/)[1]+"</i>");
+  }catch(err){}
   if(currentTheme == "elegant"){
     switch(usr.color){
         case "#ffff00":
