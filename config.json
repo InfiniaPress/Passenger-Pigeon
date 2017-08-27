@@ -2,5 +2,6 @@
   "port": 9999,
   "maxBanTime": 9999,
   "privateKey": "I am a person",
+  "publicKey": "Hence, I am good",
   "loginPage": "https://infinia.press/sso/login"
 }

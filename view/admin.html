@@ -51,7 +51,7 @@
 				},
 				dataType: "application/json"
 			});
-			socket.emit("saveAdminSettings", $("#privateKey").val());
+			socket.emit("saveAdminSettings", $("#privateKey").val(), $("publicKey").val());
 		});
 
 	</script>

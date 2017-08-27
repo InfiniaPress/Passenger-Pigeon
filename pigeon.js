@@ -61,10 +61,13 @@ app.get('/', function(req, res) {
       username = tempUser;
       res.sendFile(__dirname + '/view/index.html');
     }else{
-      res.redirect(config.loginPage)
+      var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+      res.redirect(config.loginPage + "?origin=" + fullUrl + "&app_public_key=" + config.publicKey);
+      
     }
   }catch(error){
-    res.redirect(config.loginPage)
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    res.redirect(config.loginPage + "?origin=" + fullUrl + "&app_public_key=" + config.publicKey);
   }
   //}
   //})
@@ -73,8 +76,9 @@ app.get('/', function(req, res) {
 app.get('/admin', function(req, res){
   res.sendFile(__dirname + '/view/admin.html')
   io.on('connection', function(socket) {
-    socket.on('saveAdminSettings', function(key){
-      config.privateKey = key
+    socket.on('saveAdminSettings', function(Privkey, Pubkey){
+      config.privateKey = Privkey;
+      config.publicKey = Pubkey;
     });
   });
 });
