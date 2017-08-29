@@ -32,6 +32,7 @@ var tempName;
 var tempEmail;
 var tempSignature;
 var tempEncrypted;
+var fullUrl;
 
 var remove = function(array, item) {
   array.splice(array.indexOf(item), 1);
@@ -61,12 +62,11 @@ app.get('/', function(req, res) {
       username = tempUser;
       res.sendFile(__dirname + '/view/index.html');
     }else{
-      var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+      fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
       res.redirect(config.loginPage + "?origin=" + fullUrl + "&app_public_key=" + config.publicKey);
-      
     }
   }catch(error){
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     res.redirect(config.loginPage + "?origin=" + fullUrl + "&app_public_key=" + config.publicKey);
   }
   //}
@@ -79,6 +79,7 @@ app.get('/admin', function(req, res){
     socket.on('saveAdminSettings', function(Privkey, Pubkey){
       config.privateKey = Privkey;
       config.publicKey = Pubkey;
+      fs.writeFileSync('./config.json', JSON.stringify(config));
     });
   });
 });
