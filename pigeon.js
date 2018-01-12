@@ -197,12 +197,17 @@ io.on('connection', function(socket) {
   //  });
   console.log('Passenger Pigeon >> a user connected');
   socket.on('disconnect', function() {
+    try{
+      remove(users[socket.room], socket.username);
+    }catch(err){
+      console.log(err);
+      console.log(users[socket.room] + " is the user list and " + socket.username + " is the username. The room is " + socket.room)
+    }
     socket.broadcast.emit('user left', {
       username: socket.username,
       color: socket.color,
       online: users[socket.room]
     });
-    remove(users[socket.room], socket.username);
     console.log('Passenger Pigeon >> user disconnected');
   });
 });
